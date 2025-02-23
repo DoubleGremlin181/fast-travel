@@ -36,7 +36,7 @@
                                     "targetUrl": "https://www.youtube.com/feed/subscriptions"
                                 },
                                 {
-                                    "pattern": "channel/{channel_name}",
+                                    "pattern": "c/{channel_name}",
                                     "targetUrl": "https://www.youtube.com/c/{channel_name}"
                                 }
                             ],
@@ -44,7 +44,7 @@
                         }
                     ]
                 },
-                "map": {
+                "maps": {
                     "routes": [
                         {
                             "supportedDevices": ["Android", "iOS"],
@@ -82,6 +82,17 @@
                                 }
                             ],
                             "fallbackUrl": "https://apps.apple.com/search?q={args}"
+                        },
+                        {
+                            "supportedDevices": ["MacOS", "Windows", "Linux", "Unknown"],
+                            "defaultUrl": "https://store.steampowered.com",
+                            "customPatterns": [
+                                {
+                                    "pattern": "category/{category_name}",
+                                    "targetUrl": "https://store.steampowered.com/category/{category_name}"
+                                }
+                            ],
+                            "fallbackUrl": "https://store.steampowered.com/search/?term={args}"
                         }
                     ]
                 }
@@ -94,10 +105,12 @@
         }
 
         function showAvailableCommands() {
-            let table = '<h1>Available Commands</h1><table><tr><th>Command</th><th>Default URL</th><th>Custom Patterns</th></tr>';
+            let table = '<h1>Available Commands</h1><table><tr><th>Command</th><th>Default URL</th><th>Custom Patterns</th><th>Fallback URL</th></tr>';
             for (const [cmd, data] of Object.entries(config.commands)) {
-                let patterns = data.routes[0].customPatterns.length ? data.routes[0].customPatterns.map(p => p.pattern).join(', ') : 'None';
-                table += `<tr><td><strong>${cmd}</strong></td><td>${data.routes[0].defaultUrl}</td><td>${patterns}</td></tr>`;
+                for (const route of data.routes) {
+                    let patterns = route.customPatterns.length ? route.customPatterns.map(p => p.pattern).join(', ') : 'None';
+                    table += `<tr><td><strong>${cmd}</strong></td><td>${route.defaultUrl}</td><td>${patterns}</td><td>${route.fallbackUrl}</td></tr>`;
+                }
             }
             table += '</table>';
             document.body.innerHTML = table;
