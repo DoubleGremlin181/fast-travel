@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bunnylol-clone Functionality Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .info { margin-top: 20px; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <h1>bunnylol-clone Functionality Test</h1>
+    <div class="info" id="device"></div>
+    <div class="info" id="url"></div>
+    <div class="info" id="params"></div>
+
+    <script>
+        function getDeviceType() {
+            const ua = navigator.userAgent.toLowerCase();
+            if (/android/.test(ua)) return "Android";
+            if (/iphone|ipad|ipod/.test(ua)) return "iOS";
+            if (/win/.test(ua)) return "Windows";
+            if (/mac/.test(ua)) return "MacOS";
+            if (/linux/.test(ua)) return "Linux";
+            return "Unknown Device";
+        }
+
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            let paramString = "";
+            params.forEach((value, key) => {
+                paramString += `${key}: ${value} <br>`;
+            });
+            return paramString || "No URL parameters";
+        }
+
+        document.getElementById("device").innerHTML = `<strong>Device Type:</strong> ${getDeviceType()}`;
+        document.getElementById("url").innerHTML = `<strong>Current URL:</strong> ${window.location.href}`;
+        document.getElementById("params").innerHTML = `<strong>URL Parameters:</strong> <br> ${getUrlParams()}`;
+    </script>
+</body>
+</html>
