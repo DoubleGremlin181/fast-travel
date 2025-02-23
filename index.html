@@ -8,52 +8,137 @@
     <style>
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
         .info { margin-top: 20px; font-size: 18px; }
+        table { width: 80%; margin: auto; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
     </style>
-</head>
-<body>
-    <h1>bunnylol-clone Functionality Test</h1>
-    <div class="info" id="device"></div>
-    <div class="info" id="url"></div>
-    <div class="info" id="params"></div>
-    <div class="info" id="command"></div>
-    <div class="info" id="args"></div>
-
     <script>
-        function getDeviceType() {
-            const ua = navigator.userAgent.toLowerCase();
-            if (/android/.test(ua)) return "Android";
-            if (/iphone|ipad|ipod/.test(ua)) return "iOS";
-            if (/win/.test(ua)) return "Windows";
-            if (/mac/.test(ua)) return "MacOS";
-            if (/linux/.test(ua)) return "Linux";
-            return "Unknown Device";
-        }
-
-        function getUrlParams() {
-            const params = new URLSearchParams(window.location.search);
-            let paramString = "";
-            params.forEach((value, key) => {
-                paramString += `${key}: ${value} <br>`;
-            });
-            return paramString || "No URL parameters";
-        }
+        const config = {
+            "commands": {
+                "g": {
+                    "routes": [
+                        {
+                            "supportedDevices": "*",
+                            "defaultUrl": "https://www.google.com",
+                            "customPatterns": [],
+                            "fallbackUrl": "https://www.google.com/search?q={args}"
+                        }
+                    ]
+                },
+                "yt": {
+                    "routes": [
+                        {
+                            "supportedDevices": "*",
+                            "defaultUrl": "https://www.youtube.com",
+                            "customPatterns": [
+                                {
+                                    "pattern": "subs",
+                                    "targetUrl": "https://www.youtube.com/feed/subscriptions"
+                                },
+                                {
+                                    "pattern": "channel/{channel_name}",
+                                    "targetUrl": "https://www.youtube.com/c/{channel_name}"
+                                }
+                            ],
+                            "fallbackUrl": "https://www.youtube.com/results?search_query={args}"
+                        }
+                    ]
+                },
+                "map": {
+                    "routes": [
+                        {
+                            "supportedDevices": ["Android", "iOS"],
+                            "defaultUrl": "https://maps.google.com",
+                            "customPatterns": [
+                                {
+                                    "pattern": "directions/{from}/{to}",
+                                    "targetUrl": "https://maps.google.com/dir/{from}/{to}"
+                                }
+                            ],
+                            "fallbackUrl": "https://maps.google.com/?q={args}"
+                        }
+                    ]
+                },
+                "apps": {
+                    "routes": [
+                        {
+                            "supportedDevices": ["Android"],
+                            "defaultUrl": "https://play.google.com/store",
+                            "customPatterns": [
+                                {
+                                    "pattern": "developer/{dev_name}",
+                                    "targetUrl": "https://play.google.com/store/apps/developer?id={dev_name}"
+                                }
+                            ],
+                            "fallbackUrl": "https://play.google.com/store/search?q={args}"
+                        },
+                        {
+                            "supportedDevices": ["iOS"],
+                            "defaultUrl": "https://apps.apple.com",
+                            "customPatterns": [
+                                {
+                                    "pattern": "developer/{dev_name}",
+                                    "targetUrl": "https://apps.apple.com/developer/{dev_name}"
+                                }
+                            ],
+                            "fallbackUrl": "https://apps.apple.com/search?q={args}"
+                        }
+                    ]
+                }
+            }
+        };
 
         function parseQueryParam() {
             const params = new URLSearchParams(window.location.search);
-            const query = (params.get("q") || "").trim().replace(/\s+/g, " ");
-            const parts = query.split(" ");
-            const command = parts.shift() || "No command";
-            const args = parts.join(" ") || "No arguments";
-            return { command, args };
+            return params.get("q")?.trim() || "";
         }
 
-        const { command, args } = parseQueryParam();
+        function showAvailableCommands() {
+            let table = '<h1>Available Commands</h1><table><tr><th>Command</th><th>Default URL</th><th>Custom Patterns</th></tr>';
+            for (const [cmd, data] of Object.entries(config.commands)) {
+                let patterns = data.routes[0].customPatterns.length ? data.routes[0].customPatterns.map(p => p.pattern).join(', ') : 'None';
+                table += `<tr><td><strong>${cmd}</strong></td><td>${data.routes[0].defaultUrl}</td><td>${patterns}</td></tr>`;
+            }
+            table += '</table>';
+            document.body.innerHTML = table;
+        }
 
-        document.getElementById("device").innerHTML = `<strong>Device Type:</strong> ${getDeviceType()}`;
-        document.getElementById("url").innerHTML = `<strong>Current URL:</strong> ${window.location.href}`;
-        document.getElementById("params").innerHTML = `<strong>URL Parameters:</strong> <br> ${getUrlParams()}`;
-        document.getElementById("command").innerHTML = `<strong>Command:</strong> ${command}`;
-        document.getElementById("args").innerHTML = `<strong>Arguments:</strong> ${args}`;
+        function processQuery() {
+            const query = parseQueryParam();
+            if (!query) {
+                showAvailableCommands();
+                return;
+            }
+            
+            const [command, ...args] = query.split(" ");
+            if (!config.commands[command]) {
+                document.body.innerHTML = '<h1>Invalid Command</h1><p>The command provided is not recognized.</p>';
+                return;
+            }
+            
+            const commandConfig = config.commands[command];
+            let targetUrl = commandConfig.routes[0].defaultUrl;
+            
+            if (args.length > 0) {
+                for (const patternObj of commandConfig.routes[0].customPatterns) {
+                    const patternRegex = new RegExp(`^${patternObj.pattern.replace(/{(\w+)}/g, '(?<$1>\\w+)')}$`);
+                    const match = args.join(" ").match(patternRegex);
+                    if (match) {
+                        targetUrl = patternObj.targetUrl.replace(/{(\w+)}/g, (_, key) => match.groups[key] || "");
+                        break;
+                    }
+                }
+                if (!targetUrl || targetUrl === commandConfig.routes[0].defaultUrl) {
+                    targetUrl = commandConfig.routes[0].fallbackUrl.replace("{args}", encodeURIComponent(args.join(" ")));
+                }
+            }
+            window.location.href = targetUrl;
+        }
+        
+        window.onload = processQuery;
     </script>
+</head>
+<body>
+    <h1>Processing...</h1>
 </body>
 </html>
