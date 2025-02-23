@@ -15,84 +15,108 @@
     <script>
         const config = {
             "commands": {
-                "g": {
+                "g": { "routes": [{ "supportedDevices": "*", "defaultUrl": "https://www.google.com", "fallbackUrl": "https://www.google.com/search?q={args}" }] },
+                "wiki": {
                     "routes": [
                         {
                             "supportedDevices": "*",
-                            "defaultUrl": "https://www.google.com",
-                            "customPatterns": [],
-                            "fallbackUrl": "https://www.google.com/search?q={args}"
+                            "defaultUrl": "https://en.wikipedia.org",
+                            "fallbackUrl": "https://en.wikipedia.org/wiki/Special:Search?search={args}"
                         }
                     ]
                 },
-                "yt": {
+                "cal": {
                     "routes": [
                         {
                             "supportedDevices": "*",
-                            "defaultUrl": "https://www.youtube.com",
+                            "defaultUrl": "https://calendar.google.com",
                             "customPatterns": [
                                 {
-                                    "pattern": "subs",
-                                    "targetUrl": "https://www.youtube.com/feed/subscriptions"
+                                    "pattern": "event/{title}/{date}/{time}",
+                                    "targetUrl": "https://calendar.google.com/calendar/r/eventedit?text={title}&dates={date}T{time}Z"
+                                }
+                            ],
+                            "fallbackUrl": "https://calendar.google.com"
+                        }
+                    ]
+                },
+                "r": {
+                    "routes": [
+                        {
+                            "supportedDevices": "*",
+                            "defaultUrl": "https://www.reddit.com",
+                            "customPatterns": [
+                                {
+                                    "pattern": "r/{subreddit}",
+                                    "targetUrl": "https://www.reddit.com/r/{subreddit}"
                                 },
                                 {
-                                    "pattern": "c/{channel_name}",
-                                    "targetUrl": "https://www.youtube.com/c/{channel_name}"
+                                    "pattern": "u/{username}",
+                                    "targetUrl": "https://www.reddit.com/user/{username}"
                                 }
                             ],
-                            "fallbackUrl": "https://www.youtube.com/results?search_query={args}"
+                            "fallbackUrl": "https://www.reddit.com/search/?q={args}"
                         }
                     ]
                 },
-                "maps": {
+                "sp": {
                     "routes": [
                         {
-                            "supportedDevices": ["Android", "iOS"],
-                            "defaultUrl": "https://maps.google.com",
+                            "supportedDevices": "*",
+                            "defaultUrl": "https://open.spotify.com",
                             "customPatterns": [
                                 {
-                                    "pattern": "directions/{from}/{to}",
-                                    "targetUrl": "https://maps.google.com/dir/{from}/{to}"
+                                    "pattern": "track/{track_id}",
+                                    "targetUrl": "https://open.spotify.com/track/{track_id}"
+                                },
+                                {
+                                    "pattern": "album/{album_id}",
+                                    "targetUrl": "https://open.spotify.com/album/{album_id}"
+                                },
+                                {
+                                    "pattern": "artist/{artist_id}",
+                                    "targetUrl": "https://open.spotify.com/artist/{artist_id}"
+                                },
+                                {
+                                    "pattern": "playlist/{playlist_id}",
+                                    "targetUrl": "https://open.spotify.com/playlist/{playlist_id}"
                                 }
                             ],
-                            "fallbackUrl": "https://maps.google.com/?q={args}"
+                            "fallbackUrl": "https://open.spotify.com/search/{args}"
                         }
                     ]
                 },
-                "apps": {
+                "mailto": {
                     "routes": [
                         {
-                            "supportedDevices": ["Android"],
-                            "defaultUrl": "https://play.google.com/store",
+                            "supportedDevices": "*",
+                            "defaultUrl": "mailto:",
                             "customPatterns": [
                                 {
-                                    "pattern": "developer/{dev_name}",
-                                    "targetUrl": "https://play.google.com/store/apps/developer?id={dev_name}"
+                                    "pattern": "{email}",
+                                    "targetUrl": "mailto:{email}"
+                                },
+                                {
+                                    "pattern": "{email}?subject={subject}&body={body}",
+                                    "targetUrl": "mailto:{email}?subject={subject}&body={body}"
                                 }
                             ],
-                            "fallbackUrl": "https://play.google.com/store/search?q={args}"
-                        },
+                            "fallbackUrl": "mailto:"
+                        }
+                    ]
+                },
+                "file": {
+                    "routes": [
                         {
-                            "supportedDevices": ["iOS"],
-                            "defaultUrl": "https://apps.apple.com",
+                            "supportedDevices": "*",
+                            "defaultUrl": "file:///",
                             "customPatterns": [
                                 {
-                                    "pattern": "developer/{dev_name}",
-                                    "targetUrl": "https://apps.apple.com/developer/{dev_name}"
+                                    "pattern": "{path}",
+                                    "targetUrl": "file:///{path}"
                                 }
                             ],
-                            "fallbackUrl": "https://apps.apple.com/search?q={args}"
-                        },
-                        {
-                            "supportedDevices": ["MacOS", "Windows", "Linux", "Unknown"],
-                            "defaultUrl": "https://store.steampowered.com",
-                            "customPatterns": [
-                                {
-                                    "pattern": "category/{category_name}",
-                                    "targetUrl": "https://store.steampowered.com/category/{category_name}"
-                                }
-                            ],
-                            "fallbackUrl": "https://store.steampowered.com/search/?term={args}"
+                            "fallbackUrl": "file:///"
                         }
                     ]
                 }
@@ -115,22 +139,18 @@
         }
 
         function findMatchingRoute(commandConfig, deviceType) {
-            // Prioritize exact device match
             let matchingRoute = commandConfig.routes.find(route => route.supportedDevices.includes(deviceType));
-
-            // If no exact match, check for wildcard ('*')
             if (!matchingRoute) {
                 matchingRoute = commandConfig.routes.find(route => route.supportedDevices === "*" || route.supportedDevices.includes("Unknown"));
             }
-
             return matchingRoute;
         }
 
         function generateCommandTable() {
-            let table = '<h1>Available Commands</h1><table><tr><th>Command</th><th>Supported Devices</th><th>Default URL</th><th>Custom Patterns</th><th>Search URL</th></tr>';
+            let table = '<h1>Available Commands</h1><table><tr><th>Command</th><th>Supported Devices</th><th>Default URL</th><th>Custom Patterns</th><th>Fallback URL</th></tr>';
             for (const [cmd, data] of Object.entries(config.commands)) {
                 for (const route of data.routes) {
-                    let patterns = route.customPatterns.length ? route.customPatterns.map(p => p.pattern).join(', ') : 'None';
+                    let patterns = route.customPatterns ? route.customPatterns.map(p => p.pattern).join(', ') : 'None';
                     let devices = Array.isArray(route.supportedDevices) ? route.supportedDevices.join(', ') : "All";
                     table += `<tr><td><strong>${cmd}</strong></td><td>${devices}</td><td>${route.defaultUrl}</td><td>${patterns}</td><td>${route.fallbackUrl}</td></tr>`;
                 }
@@ -165,7 +185,6 @@
             }
 
             let targetUrl = matchingRoute.defaultUrl;
-
             if (args.length > 0) {
                 for (const patternObj of matchingRoute.customPatterns) {
                     const patternRegex = new RegExp(`^${patternObj.pattern.replace(/{(\w+)}/g, '(?<$1>\\w+)')}$`);
