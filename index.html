@@ -104,7 +104,7 @@
             return params.get("q")?.trim() || "";
         }
 
-        function showAvailableCommands() {
+        function generateCommandTable() {
             let table = '<h1>Available Commands</h1><table><tr><th>Command</th><th>Default URL</th><th>Custom Patterns</th><th>Fallback URL</th></tr>';
             for (const [cmd, data] of Object.entries(config.commands)) {
                 for (const route of data.routes) {
@@ -113,7 +113,11 @@
                 }
             }
             table += '</table>';
-            document.body.innerHTML = table;
+            return table;
+        }
+
+        function showAvailableCommands() {
+            document.body.innerHTML = generateCommandTable();
         }
 
         function processQuery() {
@@ -125,7 +129,7 @@
             
             const [command, ...args] = query.split(" ");
             if (!config.commands[command]) {
-                document.body.innerHTML = '<h1>Invalid Command</h1><p>The command provided is not recognized.</p>';
+                document.body.innerHTML = '<h1>Invalid Command</h1><p>The command provided is not recognized.</p>' + generateCommandTable();
                 return;
             }
             
