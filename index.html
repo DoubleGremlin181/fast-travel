@@ -99,17 +99,40 @@
             }
         };
 
+        function getDeviceType() {
+            const userAgent = navigator.userAgent;
+            if (/Windows NT/i.test(userAgent)) return "Windows";
+            if (/Macintosh|Mac OS X/i.test(userAgent)) return "MacOS";
+            if (/Linux/i.test(userAgent)) return "Linux";
+            if (/Android/i.test(userAgent)) return "Android";
+            if (/iPhone|iPad|iPod/i.test(userAgent)) return "iOS";
+            return "Unknown";
+        }
+
         function parseQueryParam() {
             const params = new URLSearchParams(window.location.search);
             return params.get("q")?.trim() || "";
         }
 
+        function findMatchingRoute(commandConfig, deviceType) {
+            // Prioritize exact device match
+            let matchingRoute = commandConfig.routes.find(route => route.supportedDevices.includes(deviceType));
+
+            // If no exact match, check for wildcard ('*')
+            if (!matchingRoute) {
+                matchingRoute = commandConfig.routes.find(route => route.supportedDevices === "*" || route.supportedDevices.includes("Unknown"));
+            }
+
+            return matchingRoute;
+        }
+
         function generateCommandTable() {
-            let table = '<h1>Available Commands</h1><table><tr><th>Command</th><th>Default URL</th><th>Custom Patterns</th><th>Fallback URL</th></tr>';
+            let table = '<h1>Available Commands</h1><table><tr><th>Command</th><th>Supported Devices</th><th>Default URL</th><th>Custom Patterns</th><th>Search URL</th></tr>';
             for (const [cmd, data] of Object.entries(config.commands)) {
                 for (const route of data.routes) {
                     let patterns = route.customPatterns.length ? route.customPatterns.map(p => p.pattern).join(', ') : 'None';
-                    table += `<tr><td><strong>${cmd}</strong></td><td>${route.defaultUrl}</td><td>${patterns}</td><td>${route.fallbackUrl}</td></tr>`;
+                    let devices = Array.isArray(route.supportedDevices) ? route.supportedDevices.join(', ') : "All";
+                    table += `<tr><td><strong>${cmd}</strong></td><td>${devices}</td><td>${route.defaultUrl}</td><td>${patterns}</td><td>${route.fallbackUrl}</td></tr>`;
                 }
             }
             table += '</table>';
@@ -126,18 +149,25 @@
                 showAvailableCommands();
                 return;
             }
-            
+
+            const deviceType = getDeviceType();
             const [command, ...args] = query.split(" ");
             if (!config.commands[command]) {
                 document.body.innerHTML = '<h1>Invalid Command</h1><p>The command provided is not recognized.</p>' + generateCommandTable();
                 return;
             }
-            
+
             const commandConfig = config.commands[command];
-            let targetUrl = commandConfig.routes[0].defaultUrl;
-            
+            const matchingRoute = findMatchingRoute(commandConfig, deviceType);
+            if (!matchingRoute) {
+                document.body.innerHTML = '<h1>Unsupported Device</h1><p>No suitable route found for your device.</p>' + generateCommandTable();
+                return;
+            }
+
+            let targetUrl = matchingRoute.defaultUrl;
+
             if (args.length > 0) {
-                for (const patternObj of commandConfig.routes[0].customPatterns) {
+                for (const patternObj of matchingRoute.customPatterns) {
                     const patternRegex = new RegExp(`^${patternObj.pattern.replace(/{(\w+)}/g, '(?<$1>\\w+)')}$`);
                     const match = args.join(" ").match(patternRegex);
                     if (match) {
@@ -145,13 +175,13 @@
                         break;
                     }
                 }
-                if (!targetUrl || targetUrl === commandConfig.routes[0].defaultUrl) {
-                    targetUrl = commandConfig.routes[0].fallbackUrl.replace("{args}", encodeURIComponent(args.join(" ")));
+                if (!targetUrl || targetUrl === matchingRoute.defaultUrl) {
+                    targetUrl = matchingRoute.fallbackUrl.replace("{args}", encodeURIComponent(args.join(" ")));
                 }
             }
             window.location.href = targetUrl;
         }
-        
+
         window.onload = processQuery;
     </script>
 </head>
