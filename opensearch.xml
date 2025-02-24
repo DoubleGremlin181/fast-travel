@@ -5,5 +5,5 @@
     <Url type="text/html" template="https://kavishhukmani.me/bunnylol-clone?q={searchTerms}"/>
     <Url type="application/opensearchdescription+xml" rel="self" template="https://kavishhukmani.me/bunnylol-clone/opensearch.xml"/>
     <InputEncoding>UTF-8</InputEncoding>
-    <Image height="16" width="16" type="image/x-icon">https://raw.githubusercontent.com/DoubleGremlin181/DoubleGremlin181.github.io/refs/heads/master/assets/images/favicon/favicon.ico</Image>
+    <Image height="16" width="16" type="image/x-icon">https://raw.githubusercontent.com/doublegremlin181/doublegremlin181.github.io/refs/heads/master/assets/images/favicon/favicon.ico</Image>
 </OpenSearchDescription>
