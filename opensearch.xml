@@ -3,6 +3,7 @@
     <ShortName>bunnylol-clone Search</ShortName>
     <Description>Search bunnylol-clone functionality test site</Description>
     <Url type="text/html" template="{scheme}://{host}/?q={searchTerms}"/>
+    <Url type="application/opensearchdescription+xml" rel="self" template="{scheme}://{host}/opensearch.xml"/>
     <InputEncoding>UTF-8</InputEncoding>
     <Image height="16" width="16" type="image/x-icon">{scheme}://{host}/favicon.ico</Image>
 </OpenSearchDescription>
