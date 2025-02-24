@@ -259,10 +259,28 @@
 
       const deviceType = getDeviceType();
       const [command, ...args] = query.split(" ");
+
       if (!config.commands[command]) {
         document.getElementById("mainContent").innerHTML =
-          '<h1>Invalid Command</h1><p>The command provided is not recognized.</p>' +
+          '<h1>Command Not Recognized</h1>' +
+          '<p>The command "' + command + '" is not recognized. Did you mean to google your query?</p>' +
+          '<button id="googleButton">Google It</button>' +
           generateCommandTable();
+
+        document.getElementById("googleButton").addEventListener("click", function() {
+          const googleCommand = config.commands["g"];
+          const fallbackUrl = googleCommand.routes[0].fallbackUrl.replace("{args}", encodeURIComponent(query));
+          window.location.href = fallbackUrl;
+        });
+
+        document.addEventListener("keydown", function handler(event) {
+          if (event.key.toLowerCase() === 'g') {
+            const googleCommand = config.commands["g"];
+            const fallbackUrl = googleCommand.routes[0].fallbackUrl.replace("{args}", encodeURIComponent(query));
+            document.removeEventListener("keydown", handler);
+            window.location.href = fallbackUrl;
+          }
+        });
         return;
       }
 
@@ -291,6 +309,7 @@
       }
       window.location.href = targetUrl;
     }
+
 
     function submitSearch() {
       const searchInput = document.getElementById('searchBar');
