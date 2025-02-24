@@ -2,8 +2,8 @@
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
     <ShortName>bunnylol-clone Search</ShortName>
     <Description>Search bunnylol-clone functionality test site</Description>
-    <Url type="text/html" template="{scheme}://{host}/?q={searchTerms}"/>
-    <Url type="application/opensearchdescription+xml" rel="self" template="{scheme}://{host}/opensearch.xml"/>
+    <Url type="text/html" template="https://kavishhukmani.me/bunnylol-clone?q={searchTerms}"/>
+    <Url type="application/opensearchdescription+xml" rel="self" template="https://kavishhukmani.me/bunnylol-clone/opensearch.xml"/>
     <InputEncoding>UTF-8</InputEncoding>
-    <Image height="16" width="16" type="image/x-icon">{scheme}://{host}/favicon.ico</Image>
+    <Image height="16" width="16" type="image/x-icon">https://kavishhukmani.me/bunnylol-clone/favicon.ico</Image>
 </OpenSearchDescription>
