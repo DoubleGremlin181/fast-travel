@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-    <ShortName>bunnylol-clone Search</ShortName>
-    <Description>Search bunnylol-clone functionality test site</Description>
+    <ShortName>bunnylol-clone</ShortName>
+    <Description>Host your own bunnylol-clone with GitHub pages</Description>
     <Url type="text/html" template="https://kavishhukmani.me/bunnylol-clone?q={searchTerms}"/>
     <Url type="application/opensearchdescription+xml" rel="self" template="https://kavishhukmani.me/bunnylol-clone/opensearch.xml"/>
     <InputEncoding>UTF-8</InputEncoding>
