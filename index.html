@@ -93,7 +93,6 @@
       /* Shortcut Hint */
       .shortcut-hint {
         margin-left: 4px;
-        /* Inherit the parent's font-size */
         font-size: inherit;
       }
       /* Command List Styles */
@@ -160,6 +159,44 @@
           min-width: unset;
           width: 100%;
           margin-bottom: 10px;
+        }
+      }
+
+      /* Dark Mode Styles */
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #121212;
+          color: #e0e0e0;
+        }
+        .search-bar input {
+          background-color: #333;
+          color: #e0e0e0;
+          border: 1px solid #555;
+        }
+        .search-bar button {
+          background-color: #007bff;
+          border: 1px solid #007bff;
+        }
+        .search-bar button:hover {
+          background-color: #0056b3;
+        }
+        .command-item {
+          border: 1px solid #444;
+        }
+        .command-title {
+          background-color: #1e1e1e;
+        }
+        .command-title:hover {
+          background-color: #333;
+        }
+        .command-details {
+          background-color: #1e1e1e;
+        }
+        .google-btn {
+          background-color: #4285f4;
+        }
+        .google-btn:hover {
+          background-color: #357ae8;
         }
       }
     </style>
