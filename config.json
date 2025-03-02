@@ -1,0 +1,190 @@
+{
+  "commands": {
+    "g": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.google.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.google.com/search?q={args}"
+        }
+      ]
+    },
+    "yt": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.youtube.com",
+          "customPatterns": [
+            {
+              "pattern": "subs",
+              "targetUrl": "https://www.youtube.com/feed/subscriptions"
+            },
+            {
+              "pattern": "c/{channel_name}",
+              "targetUrl": "https://www.youtube.com/c/{channel_name}"
+            }
+          ],
+          "fallbackUrl": "https://www.youtube.com/results?search_query={args}"
+        }
+      ]
+    },
+    "maps": {
+      "routes": [
+        {
+          "supportedDevices": ["Android", "iOS"],
+          "defaultUrl": "https://maps.google.com",
+          "customPatterns": [
+            {
+              "pattern": "directions/{from}/{to}",
+              "targetUrl": "https://maps.google.com/dir/{from}/{to}"
+            }
+          ],
+          "fallbackUrl": "https://maps.google.com/?q={args}"
+        }
+      ]
+    },
+    "apps": {
+      "routes": [
+        {
+          "supportedDevices": ["Android"],
+          "defaultUrl": "https://play.google.com/store",
+          "customPatterns": [
+            {
+              "pattern": "developer/{dev_name}",
+              "targetUrl": "https://play.google.com/store/apps/developer?id={dev_name}"
+            }
+          ],
+          "fallbackUrl": "https://play.google.com/store/search?q={args}"
+        },
+        {
+          "supportedDevices": ["iOS"],
+          "defaultUrl": "https://apps.apple.com",
+          "customPatterns": [
+            {
+              "pattern": "developer/{dev_name}",
+              "targetUrl": "https://apps.apple.com/developer/{dev_name}"
+            }
+          ],
+          "fallbackUrl": "https://apps.apple.com/search?q={args}"
+        },
+        {
+          "supportedDevices": ["MacOS", "Windows", "Linux", "Unknown"],
+          "defaultUrl": "https://store.steampowered.com",
+          "customPatterns": [
+            {
+              "pattern": "category/{category_name}",
+              "targetUrl": "https://store.steampowered.com/category/{category_name}"
+            }
+          ],
+          "fallbackUrl": "https://store.steampowered.com/search/?term={args}"
+        }
+      ]
+    },
+    "wiki": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://en.wikipedia.org",
+          "customPatterns": [],
+          "fallbackUrl": "https://en.wikipedia.org/w/index.php?search={args}"
+        }
+      ]
+    },
+    "cal": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://calendar.google.com",
+          "customPatterns": [
+            {
+              "pattern": "event/{title}/{date}/{time}",
+              "targetUrl": "https://calendar.google.com/calendar/r/eventedit?text={title}&dates={date}T{time}Z"
+            }
+          ],
+          "fallbackUrl": "https://calendar.google.com"
+        }
+      ]
+    },
+    "r": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.reddit.com",
+          "customPatterns": [
+            {
+              "pattern": "r/{subreddit}",
+              "targetUrl": "https://www.reddit.com/r/{subreddit}"
+            },
+            {
+              "pattern": "u/{username}",
+              "targetUrl": "https://www.reddit.com/user/{username}"
+            }
+          ],
+          "fallbackUrl": "https://www.reddit.com/search/?q={args}"
+        }
+      ]
+    },
+    "sp": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://open.spotify.com",
+          "customPatterns": [
+            {
+              "pattern": "track/{track_id}",
+              "targetUrl": "https://open.spotify.com/track/{track_id}"
+            },
+            {
+              "pattern": "album/{album_id}",
+              "targetUrl": "https://open.spotify.com/album/{album_id}"
+            },
+            {
+              "pattern": "artist/{artist_id}",
+              "targetUrl": "https://open.spotify.com/artist/{artist_id}"
+            },
+            {
+              "pattern": "playlist/{playlist_id}",
+              "targetUrl": "https://open.spotify.com/playlist/{playlist_id}"
+            }
+          ],
+          "fallbackUrl": "https://open.spotify.com/search/{args}"
+        }
+      ]
+    },
+    "mailto": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "mailto:",
+          "customPatterns": [
+            {
+              "pattern": "{email}",
+              "targetUrl": "mailto:{email}"
+            },
+            {
+              "pattern": "{email}?subject={subject}&body={body}",
+              "targetUrl": "mailto:{email}?subject={subject}&body={body}"
+            }
+          ],
+          "fallbackUrl": "mailto:"
+        }
+      ]
+    },
+    "file": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "file:///",
+          "customPatterns": [
+            {
+              "pattern": "{path}",
+              "targetUrl": "file:///{path}"
+            }
+          ],
+          "fallbackUrl": "file:///"
+        }
+      ]
+    }
+  }
+}
