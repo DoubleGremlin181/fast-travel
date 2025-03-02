@@ -17,63 +17,174 @@
       href="https://raw.githubusercontent.com/DoubleGremlin181/DoubleGremlin181.github.io/refs/heads/master/assets/images/favicon/favicon.ico"
     />
     <style>
+      /* Global Styles */
       body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        padding: 20px;
         margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        background-color: #fafafa;
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      .container {
+        width: 100%;
+        max-width: 500px;
+        padding: 20px;
+        box-sizing: border-box;
       }
       header {
         margin-bottom: 20px;
       }
+      .header-title {
+        font-size: 1.3em;
+        font-weight: bold;
+        text-align: left;
+        margin-bottom: 10px;
+      }
+      /* Search Bar Styles */
       .search-bar {
-        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
       }
       .search-bar input {
-        padding: 8px;
+        flex-grow: 1;
+        padding: 12px;
         font-size: 16px;
-        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 4px 0 0 4px;
+        outline: none;
+        transition: border-color 0.3s ease;
+        min-width: 300px;
+      }
+      .search-bar input:focus {
+        border-color: #007bff;
       }
       .search-bar button {
-        padding: 8px 12px;
+        padding: 12px 16px;
         font-size: 16px;
+        border: 1px solid #007bff;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 0 4px 4px 0;
+        transition: background-color 0.3s ease;
       }
-      main {
-        min-height: 200px;
+      .search-bar button:hover {
+        background-color: #0056b3;
       }
-      table {
-        width: 80%;
-        margin: 20px auto;
-        border-collapse: collapse;
+      /* Google It Button */
+      .google-btn {
+        padding: 6px 10px;
+        font-size: 1em;
+        border: none;
+        background-color: #4285f4;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
       }
-      th,
-      td {
-        border: 1px solid #333;
-        padding: 8px;
-        text-align: left;
+      .google-btn:hover {
+        background-color: #357ae8;
       }
-      th {
-        background-color: #f2f2f2;
+      /* Shortcut Hint */
+      .shortcut-hint {
+        margin-left: 4px;
+        /* Inherit the parent's font-size */
+        font-size: inherit;
+      }
+      /* Command List Styles */
+      .commands-heading {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+        font-weight: bold;
+      }
+      .command-list {
+        margin-top: 10px;
+      }
+      .command-item {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        overflow: hidden;
+      }
+      .command-title {
+        background-color: #f4f4f4;
+        padding: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .command-title:hover {
+        background-color: #e9e9e9;
+      }
+      .arrow {
+        font-size: 1em;
+        margin-left: 10px;
+      }
+      .command-details {
+        padding: 10px;
+        display: none;
+        font-size: 0.9em;
+      }
+      .route-details {
+        margin-bottom: 10px;
+      }
+      .route-details p {
+        margin: 4px 0;
+      }
+      /* Responsive Adjustments */
+      @media (min-width: 768px) {
+        .container {
+          max-width: 700px;
+        }
+        .search-bar input {
+          min-width: 400px;
+        }
+      }
+      @media (max-width: 480px) {
+        .header-title {
+          text-align: center;
+        }
+        .search-bar {
+          flex-direction: column;
+          align-items: center;
+        }
+        .search-bar input {
+          min-width: unset;
+          width: 100%;
+          margin-bottom: 10px;
+        }
       }
     </style>
   </head>
   <body>
-    <header>
-      <div class="search-bar">
-        <input
-          type="text"
-          id="searchBar"
-          placeholder="Enter search query..."
-          onkeydown="if(event.key==='Enter') submitSearch();"
-        />
-        <button onclick="submitSearch()">Search</button>
-      </div>
-    </header>
-    <main id="mainContent">
-      <h1>Processing...</h1>
-    </main>
+    <div class="container">
+      <header>
+        <div class="header-title">bunnylol-clone</div>
+        <div class="search-bar">
+          <input
+            type="text"
+            id="searchBar"
+            placeholder="Enter search query..."
+            onkeydown="if(event.key==='Enter') submitSearch();"
+          />
+          <button onclick="submitSearch()">Search</button>
+        </div>
+      </header>
+      <main id="mainContent">
+        <p style="text-align: center">Processing...</p>
+      </main>
+    </div>
     <script>
-      const isDebug = new URLSearchParams(window.location.search).get("debug") === "true";
+      const isDebug =
+        new URLSearchParams(window.location.search).get("debug") === "true";
 
       function getDeviceType() {
         const ua = navigator.userAgent;
@@ -86,53 +197,83 @@
       }
 
       function parseQuery() {
-        return new URLSearchParams(window.location.search).get("q")?.trim() || "";
+        return (
+          new URLSearchParams(window.location.search).get("q")?.trim() || ""
+        );
       }
 
       function findMatchingRoute(commandConfig, deviceType) {
-        // First try to find a route that explicitly supports the device type.
-        let route = commandConfig.routes.find(r =>
-          Array.isArray(r.supportedDevices) && r.supportedDevices.includes(deviceType)
+        let route = commandConfig.routes.find(
+          (r) =>
+            Array.isArray(r.supportedDevices) &&
+            r.supportedDevices.includes(deviceType)
         );
-        // Fallback to a wildcard or "Unknown" support.
         return (
           route ||
           commandConfig.routes.find(
-            r =>
+            (r) =>
               r.supportedDevices === "*" ||
-              (Array.isArray(r.supportedDevices) && r.supportedDevices.includes("Unknown"))
+              (Array.isArray(r.supportedDevices) &&
+                r.supportedDevices.includes("Unknown"))
           )
         );
       }
 
-      function generateCommandTable() {
-        let html = `<h1>Available Commands</h1>
-          <table>
-            <tr>
-              <th>Command</th>
-              <th>Supported Devices</th>
-              <th>Default URL</th>
-              <th>Custom Patterns</th>
-              <th>Fallback URL</th>
-            </tr>`;
-        Object.entries(config.commands).forEach(([cmd, data]) => {
-          data.routes.forEach(route => {
-            const patterns = route.customPatterns ? route.customPatterns.map(p => p.pattern).join(", ") : "None";
-            const devices = Array.isArray(route.supportedDevices) ? route.supportedDevices.join(", ") : "All";
-            html += `<tr>
-              <td><strong>${cmd}</strong></td>
-              <td>${devices}</td>
-              <td>${route.defaultUrl}</td>
-              <td>${patterns}</td>
-              <td>${route.fallbackUrl}</td>
-            </tr>`;
-          });
+      // Collapse any open command details, then toggle the target.
+      function toggleCommandDetails(id) {
+        const details = document.querySelectorAll(".command-details");
+        details.forEach((elem) => {
+          if (elem.id !== id) {
+            elem.style.display = "none";
+            const arrow = elem.previousElementSibling.querySelector(".arrow");
+            if (arrow) arrow.textContent = "▾";
+          }
         });
-        return html + "</table>";
+        const target = document.getElementById(id);
+        const arrowElem = target.previousElementSibling.querySelector(".arrow");
+        if (target.style.display === "none" || target.style.display === "") {
+          target.style.display = "block";
+          arrowElem.textContent = "▴";
+        } else {
+          target.style.display = "none";
+          arrowElem.textContent = "▾";
+        }
+      }
+
+      function generateCommandList() {
+        let html = '<h2 class="commands-heading">Available Commands</h2>';
+        html += '<div class="command-list">';
+        Object.entries(config.commands).forEach(([cmd, data]) => {
+          const cmdId = "cmd-" + cmd;
+          html += `<div class="command-item">
+            <div class="command-title" onclick="toggleCommandDetails('${cmdId}')">
+              <span>${cmd}</span>
+              <span class="arrow">▾</span>
+            </div>
+            <div class="command-details" id="${cmdId}">`;
+          data.routes.forEach((route) => {
+            const patterns = route.customPatterns
+              ? route.customPatterns.map((p) => p.pattern).join(", ")
+              : "None";
+            const devices = Array.isArray(route.supportedDevices)
+              ? route.supportedDevices.join(", ")
+              : "All";
+            html += `<div class="route-details">
+              <p><strong>Default URL:</strong> ${route.defaultUrl}</p>
+              <p><strong>Devices:</strong> ${devices}</p>
+              <p><strong>Patterns:</strong> ${patterns}</p>
+              <p><strong>Fallback URL:</strong> ${route.fallbackUrl}</p>
+            </div>`;
+          });
+          html += `</div></div>`;
+        });
+        html += "</div>";
+        return html;
       }
 
       function showAvailableCommands() {
-        document.getElementById("mainContent").innerHTML = generateCommandTable();
+        document.getElementById("mainContent").innerHTML =
+          generateCommandList();
       }
 
       function redirectHelper(url) {
@@ -164,19 +305,32 @@
         if (!config.commands[command]) {
           const mainContent = document.getElementById("mainContent");
           mainContent.innerHTML = `
-            <h1>Command Not Recognized</h1>
-            <p>The command "${rawCommand}" is not recognized. Did you mean to google your query?</p>
-            <button id="googleButton">Google It</button>
-            ${generateCommandTable()}`;
-          document.getElementById("googleButton").addEventListener("click", () => {
-            const googleCmd = config.commands["g"];
-            const url = googleCmd.routes[0].fallbackUrl.replace("{args}", encodeURIComponent(query));
-            redirectHelper(url);
-          });
+            <div style="text-align: center; margin-bottom: 20px;">
+              <p style="font-size: 1em; margin-bottom: 10px;">
+                The command "${rawCommand}" is not recognized. Did you mean to google your query?
+              </p>
+              <button id="googleButton" class="google-btn">
+                Google It<span class="shortcut-hint">(g)</span>
+              </button>
+            </div>
+            ${generateCommandList()}`;
+          document
+            .getElementById("googleButton")
+            .addEventListener("click", () => {
+              const googleCmd = config.commands["g"];
+              const url = googleCmd.routes[0].fallbackUrl.replace(
+                "{args}",
+                encodeURIComponent(query)
+              );
+              redirectHelper(url);
+            });
           document.addEventListener("keydown", function handler(event) {
             if (event.key.toLowerCase() === "g") {
               const googleCmd = config.commands["g"];
-              const url = googleCmd.routes[0].fallbackUrl.replace("{args}", encodeURIComponent(query));
+              const url = googleCmd.routes[0].fallbackUrl.replace(
+                "{args}",
+                encodeURIComponent(query)
+              );
               document.removeEventListener("keydown", handler);
               redirectHelper(url);
             }
@@ -188,25 +342,36 @@
         const matchingRoute = findMatchingRoute(commandConfig, deviceType);
         if (!matchingRoute) {
           document.getElementById("mainContent").innerHTML = `
-            <h1>Unsupported Device</h1>
-            <p>No suitable route found for your device.</p>
-            ${generateCommandTable()}`;
+            <p style="text-align: center;">Unsupported Device: No suitable route found for your device.</p>
+            ${generateCommandList()}`;
           return;
         }
 
         let targetUrl = matchingRoute.defaultUrl;
         if (args.length) {
           const joinedArgs = args.join(" ");
-          for (const { pattern, targetUrl: targetPatternUrl } of matchingRoute.customPatterns || []) {
-            const regex = new RegExp(`^${pattern.replace(/{(\\w+)}/g, "(?<$1>\\w+)")}$`, "i");
+          for (const {
+            pattern,
+            targetUrl: targetPatternUrl,
+          } of matchingRoute.customPatterns || []) {
+            const regex = new RegExp(
+              `^${pattern.replace(/{(\\w+)}/g, "(?<$1>\\w+)")}$`,
+              "i"
+            );
             const match = joinedArgs.match(regex);
             if (match) {
-              targetUrl = targetPatternUrl.replace(/{(\w+)}/g, (_, key) => match.groups[key] || "");
+              targetUrl = targetPatternUrl.replace(
+                /{(\w+)}/g,
+                (_, key) => match.groups[key] || ""
+              );
               break;
             }
           }
           if (!targetUrl || targetUrl === matchingRoute.defaultUrl) {
-            targetUrl = matchingRoute.fallbackUrl.replace("{args}", encodeURIComponent(joinedArgs));
+            targetUrl = matchingRoute.fallbackUrl.replace(
+              "{args}",
+              encodeURIComponent(joinedArgs)
+            );
           }
         }
         redirectHelper(targetUrl);
@@ -215,9 +380,9 @@
       function submitSearch() {
         const query = document.getElementById("searchBar").value.trim();
         if (query) {
-          const redirectUrl = `${window.location.origin}?q=${encodeURIComponent(query)}${
-            isDebug ? "&debug=true" : ""
-          }`;
+          const redirectUrl = `${window.location.origin}?q=${encodeURIComponent(
+            query
+          )}${isDebug ? "&debug=true" : ""}`;
           redirectHelper(redirectUrl);
         }
       }
