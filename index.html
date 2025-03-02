@@ -1,352 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>bunnylol-clone</title>
-        <link rel="search" type="application/opensearchdescription+xml" title="bunnylol-clone Search" href="/opensearch.xml" />
-        <link rel="canonical" href="https://bunnylol-clone.kavishhukmani.me" />
-        <meta property="og:site_name" content="bunnylol-clone" />
-        <link rel="icon" href="https://raw.githubusercontent.com/DoubleGremlin181/DoubleGremlin181.github.io/refs/heads/master/assets/images/favicon/favicon.ico" />
-        <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-    .info { margin-top: 20px; font-size: 18px; }
-    table { width: 80%; margin: auto; border-collapse: collapse; }
-    th, td { border: 1px solid black; padding: 8px; text-align: left; }
-    th { background-color: #f2f2f2; }
-    .search-bar { margin-bottom: 20px; }
-    .search-bar input { padding: 8px; font-size: 16px; width: 300px; }
-    .search-bar button { padding: 8px 12px; font-size: 16px; }
-        </style>
-        <script>
-    const config = {
-      "commands": {
-        "g": {
-          "routes": [
-            {
-              "supportedDevices": "*",
-              "defaultUrl": "https://www.google.com",
-              "customPatterns": [],
-              "fallbackUrl": "https://www.google.com/search?q={args}"
-            }
-          ]
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bunnylol-clone</title>
+    <link
+      rel="search"
+      type="application/opensearchdescription+xml"
+      title="bunnylol-clone Search"
+      href="/opensearch.xml"
+    />
+    <link rel="canonical" href="https://bunnylol-clone.kavishhukmani.me" />
+    <meta property="og:site_name" content="bunnylol-clone" />
+    <link
+      rel="icon"
+      href="https://raw.githubusercontent.com/DoubleGremlin181/DoubleGremlin181.github.io/refs/heads/master/assets/images/favicon/favicon.ico"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+      }
+      .info {
+        margin-top: 20px;
+        font-size: 18px;
+      }
+      table {
+        width: 80%;
+        margin: auto;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .search-bar {
+        margin-bottom: 20px;
+      }
+      .search-bar input {
+        padding: 8px;
+        font-size: 16px;
+        width: 300px;
+      }
+      .search-bar button {
+        padding: 8px 12px;
+        font-size: 16px;
+      }
+    </style>
+    <script>
+      const config = {
+        commands: {
+          g: {
+            routes: [
+              {
+                supportedDevices: "*",
+                defaultUrl: "https://www.google.com",
+                customPatterns: [],
+                fallbackUrl: "https://www.google.com/search?q={args}",
+              },
+            ],
+          },
+          yt: {
+            routes: [
+              {
+                supportedDevices: "*",
+                defaultUrl: "https://www.youtube.com",
+                customPatterns: [
+                  {
+                    pattern: "subs",
+                    targetUrl: "https://www.youtube.com/feed/subscriptions",
+                  },
+                  {
+                    pattern: "c/{channel_name}",
+                    targetUrl: "https://www.youtube.com/c/{channel_name}",
+                  },
+                ],
+                fallbackUrl:
+                  "https://www.youtube.com/results?search_query={args}",
+              },
+            ],
+          },
+          maps: {
+            routes: [
+              {
+                supportedDevices: ["Android", "iOS"],
+                defaultUrl: "https://maps.google.com",
+                customPatterns: [
+                  {
+                    pattern: "directions/{from}/{to}",
+                    targetUrl: "https://maps.google.com/dir/{from}/{to}",
+                  },
+                ],
+                fallbackUrl: "https://maps.google.com/?q={args}",
+              },
+            ],
+          },
+          apps: {
+            routes: [
+              {
+                supportedDevices: ["Android"],
+                defaultUrl: "https://play.google.com/store",
+                customPatterns: [
+                  {
+                    pattern: "developer/{dev_name}",
+                    targetUrl:
+                      "https://play.google.com/store/apps/developer?id={dev_name}",
+                  },
+                ],
+                fallbackUrl: "https://play.google.com/store/search?q={args}",
+              },
+              {
+                supportedDevices: ["iOS"],
+                defaultUrl: "https://apps.apple.com",
+                customPatterns: [
+                  {
+                    pattern: "developer/{dev_name}",
+                    targetUrl: "https://apps.apple.com/developer/{dev_name}",
+                  },
+                ],
+                fallbackUrl: "https://apps.apple.com/search?q={args}",
+              },
+              {
+                supportedDevices: ["MacOS", "Windows", "Linux", "Unknown"],
+                defaultUrl: "https://store.steampowered.com",
+                customPatterns: [
+                  {
+                    pattern: "category/{category_name}",
+                    targetUrl:
+                      "https://store.steampowered.com/category/{category_name}",
+                  },
+                ],
+                fallbackUrl:
+                  "https://store.steampowered.com/search/?term={args}",
+              },
+            ],
+          },
+          wiki: {
+            routes: [
+              {
+                supportedDevices: "*",
+                defaultUrl: "https://en.wikipedia.org",
+                customPatterns: [],
+                fallbackUrl:
+                  "https://en.wikipedia.org/w/index.php?search={args}",
+              },
+            ],
+          },
+          cal: {
+            routes: [
+              {
+                supportedDevices: "*",
+                defaultUrl: "https://calendar.google.com",
+                customPatterns: [
+                  {
+                    pattern: "event/{title}/{date}/{time}",
+                    targetUrl:
+                      "https://calendar.google.com/calendar/r/eventedit?text={title}&dates={date}T{time}Z",
+                  },
+                ],
+                fallbackUrl: "https://calendar.google.com",
+              },
+            ],
+          },
+          r: {
+            routes: [
+              {
+                supportedDevices: "*",
+                defaultUrl: "https://www.reddit.com",
+                customPatterns: [
+                  {
+                    pattern: "r/{subreddit}",
+                    targetUrl: "https://www.reddit.com/r/{subreddit}",
+                  },
+                  {
+                    pattern: "u/{username}",
+                    targetUrl: "https://www.reddit.com/user/{username}",
+                  },
+                ],
+                fallbackUrl: "https://www.reddit.com/search/?q={args}",
+              },
+            ],
+          },
+          sp: {
+            routes: [
+              {
+                supportedDevices: "*",
+                defaultUrl: "https://open.spotify.com",
+                customPatterns: [
+                  {
+                    pattern: "track/{track_id}",
+                    targetUrl: "https://open.spotify.com/track/{track_id}",
+                  },
+                  {
+                    pattern: "album/{album_id}",
+                    targetUrl: "https://open.spotify.com/album/{album_id}",
+                  },
+                  {
+                    pattern: "artist/{artist_id}",
+                    targetUrl: "https://open.spotify.com/artist/{artist_id}",
+                  },
+                  {
+                    pattern: "playlist/{playlist_id}",
+                    targetUrl:
+                      "https://open.spotify.com/playlist/{playlist_id}",
+                  },
+                ],
+                fallbackUrl: "https://open.spotify.com/search/{args}",
+              },
+            ],
+          },
+          mailto: {
+            routes: [
+              {
+                supportedDevices: "*",
+                defaultUrl: "mailto:",
+                customPatterns: [
+                  {
+                    pattern: "{email}",
+                    targetUrl: "mailto:{email}",
+                  },
+                  {
+                    pattern: "{email}?subject={subject}&body={body}",
+                    targetUrl: "mailto:{email}?subject={subject}&body={body}",
+                  },
+                ],
+                fallbackUrl: "mailto:",
+              },
+            ],
+          },
+          file: {
+            routes: [
+              {
+                supportedDevices: "*",
+                defaultUrl: "file:///",
+                customPatterns: [
+                  {
+                    pattern: "{path}",
+                    targetUrl: "file:///{path}",
+                  },
+                ],
+                fallbackUrl: "file:///",
+              },
+            ],
+          },
         },
-        "yt": {
-          "routes": [
-            {
-              "supportedDevices": "*",
-              "defaultUrl": "https://www.youtube.com",
-              "customPatterns": [
-                {
-                  "pattern": "subs",
-                  "targetUrl": "https://www.youtube.com/feed/subscriptions"
-                },
-                {
-                  "pattern": "c/{channel_name}",
-                  "targetUrl": "https://www.youtube.com/c/{channel_name}"
-                }
-              ],
-              "fallbackUrl": "https://www.youtube.com/results?search_query={args}"
-            }
-          ]
-        },
-        "maps": {
-          "routes": [
-            {
-              "supportedDevices": ["Android", "iOS"],
-              "defaultUrl": "https://maps.google.com",
-              "customPatterns": [
-                {
-                  "pattern": "directions/{from}/{to}",
-                  "targetUrl": "https://maps.google.com/dir/{from}/{to}"
-                }
-              ],
-              "fallbackUrl": "https://maps.google.com/?q={args}"
-            }
-          ]
-        },
-        "apps": {
-          "routes": [
-            {
-              "supportedDevices": ["Android"],
-              "defaultUrl": "https://play.google.com/store",
-              "customPatterns": [
-                {
-                  "pattern": "developer/{dev_name}",
-                  "targetUrl": "https://play.google.com/store/apps/developer?id={dev_name}"
-                }
-              ],
-              "fallbackUrl": "https://play.google.com/store/search?q={args}"
-            },
-            {
-              "supportedDevices": ["iOS"],
-              "defaultUrl": "https://apps.apple.com",
-              "customPatterns": [
-                {
-                  "pattern": "developer/{dev_name}",
-                  "targetUrl": "https://apps.apple.com/developer/{dev_name}"
-                }
-              ],
-              "fallbackUrl": "https://apps.apple.com/search?q={args}"
-            },
-            {
-              "supportedDevices": ["MacOS", "Windows", "Linux", "Unknown"],
-              "defaultUrl": "https://store.steampowered.com",
-              "customPatterns": [
-                {
-                  "pattern": "category/{category_name}",
-                  "targetUrl": "https://store.steampowered.com/category/{category_name}"
-                }
-              ],
-              "fallbackUrl": "https://store.steampowered.com/search/?term={args}"
-            }
-          ]
-        },
-        "wiki": {
-          "routes": [
-            {
-              "supportedDevices": "*",
-              "defaultUrl": "https://en.wikipedia.org",
-              "customPatterns": [],
-              "fallbackUrl": "https://en.wikipedia.org/w/index.php?search={args}"
-            }
-          ]
-        },
-        "cal": {
-          "routes": [
-            {
-              "supportedDevices": "*",
-              "defaultUrl": "https://calendar.google.com",
-              "customPatterns": [
-                {
-                  "pattern": "event/{title}/{date}/{time}",
-                  "targetUrl": "https://calendar.google.com/calendar/r/eventedit?text={title}&dates={date}T{time}Z"
-                }
-              ],
-              "fallbackUrl": "https://calendar.google.com"
-            }
-          ]
-        },
-        "r": {
-          "routes": [
-            {
-              "supportedDevices": "*",
-              "defaultUrl": "https://www.reddit.com",
-              "customPatterns": [
-                {
-                  "pattern": "r/{subreddit}",
-                  "targetUrl": "https://www.reddit.com/r/{subreddit}"
-                },
-                {
-                  "pattern": "u/{username}",
-                  "targetUrl": "https://www.reddit.com/user/{username}"
-                }
-              ],
-              "fallbackUrl": "https://www.reddit.com/search/?q={args}"
-            }
-          ]
-        },
-        "sp": {
-          "routes": [
-            {
-              "supportedDevices": "*",
-              "defaultUrl": "https://open.spotify.com",
-              "customPatterns": [
-                {
-                  "pattern": "track/{track_id}",
-                  "targetUrl": "https://open.spotify.com/track/{track_id}"
-                },
-                {
-                  "pattern": "album/{album_id}",
-                  "targetUrl": "https://open.spotify.com/album/{album_id}"
-                },
-                {
-                  "pattern": "artist/{artist_id}",
-                  "targetUrl": "https://open.spotify.com/artist/{artist_id}"
-                },
-                {
-                  "pattern": "playlist/{playlist_id}",
-                  "targetUrl": "https://open.spotify.com/playlist/{playlist_id}"
-                }
-              ],
-              "fallbackUrl": "https://open.spotify.com/search/{args}"
-            }
-          ]
-        },
-        "mailto": {
-          "routes": [
-            {
-              "supportedDevices": "*",
-              "defaultUrl": "mailto:",
-              "customPatterns": [
-                {
-                  "pattern": "{email}",
-                  "targetUrl": "mailto:{email}"
-                },
-                {
-                  "pattern": "{email}?subject={subject}&body={body}",
-                  "targetUrl": "mailto:{email}?subject={subject}&body={body}"
-                }
-              ],
-              "fallbackUrl": "mailto:"
-            }
-          ]
-        },
-        "file": {
-          "routes": [
-            {
-              "supportedDevices": "*",
-              "defaultUrl": "file:///",
-              "customPatterns": [
-                {
-                  "pattern": "{path}",
-                  "targetUrl": "file:///{path}"
-                }
-              ],
-              "fallbackUrl": "file:///"
-            }
-          ]
+      };
+
+      function getDeviceType() {
+        const userAgent = navigator.userAgent;
+        if (/Windows NT/i.test(userAgent)) return "Windows";
+        if (/Macintosh|Mac OS X/i.test(userAgent)) return "MacOS";
+        if (/Linux/i.test(userAgent)) return "Linux";
+        if (/Android/i.test(userAgent)) return "Android";
+        if (/iPhone|iPad|iPod/i.test(userAgent)) return "iOS";
+        return "Unknown";
+      }
+
+      function parseQueryParam() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("q")?.trim() || "";
+      }
+
+      function findMatchingRoute(commandConfig, deviceType) {
+        let matchingRoute = commandConfig.routes.find((route) =>
+          route.supportedDevices.includes(deviceType)
+        );
+        if (!matchingRoute) {
+          matchingRoute = commandConfig.routes.find(
+            (route) =>
+              route.supportedDevices === "*" ||
+              route.supportedDevices.includes("Unknown")
+          );
         }
-      }
-    };
-
-    function getDeviceType() {
-      const userAgent = navigator.userAgent;
-      if (/Windows NT/i.test(userAgent)) return "Windows";
-      if (/Macintosh|Mac OS X/i.test(userAgent)) return "MacOS";
-      if (/Linux/i.test(userAgent)) return "Linux";
-      if (/Android/i.test(userAgent)) return "Android";
-      if (/iPhone|iPad|iPod/i.test(userAgent)) return "iOS";
-      return "Unknown";
-    }
-
-    function parseQueryParam() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get("q")?.trim() || "";
-    }
-
-    function findMatchingRoute(commandConfig, deviceType) {
-      let matchingRoute = commandConfig.routes.find(route => route.supportedDevices.includes(deviceType));
-      if (!matchingRoute) {
-        matchingRoute = commandConfig.routes.find(route => route.supportedDevices === "*" || route.supportedDevices.includes("Unknown"));
-      }
-      return matchingRoute;
-    }
-
-    function generateCommandTable() {
-      let table = '<h1>Available Commands</h1><table><tr><th>Command</th><th>Supported Devices</th><th>Default URL</th><th>Custom Patterns</th><th>Fallback URL</th></tr>';
-      for (const [cmd, data] of Object.entries(config.commands)) {
-        for (const route of data.routes) {
-          let patterns = route.customPatterns ? route.customPatterns.map(p => p.pattern).join(', ') : 'None';
-          let devices = Array.isArray(route.supportedDevices) ? route.supportedDevices.join(', ') : "All";
-          table += `<tr><td><strong>${cmd}</strong></td><td>${devices}</td><td>${route.defaultUrl}</td><td>${patterns}</td><td>${route.fallbackUrl}</td></tr>`;
-        }
-      }
-      table += '</table>';
-      return table;
-    }
-
-    function showAvailableCommands() {
-      document.getElementById("mainContent").innerHTML = generateCommandTable();
-    }
-
-    function processQuery() {
-      const query = parseQueryParam();
-      if (!query) {
-        showAvailableCommands();
-        return;
+        return matchingRoute;
       }
 
-      const deviceType = getDeviceType();
-      const [command, ...args] = query.split(" ");
-
-      if (!config.commands[command]) {
-        document.getElementById("mainContent").innerHTML =
-          '<h1>Command Not Recognized</h1>' +
-          '<p>The command "' + command + '" is not recognized. Did you mean to google your query?</p>' +
-          '<button id="googleButton">Google It</button>' +
-          generateCommandTable();
-
-        document.getElementById("googleButton").addEventListener("click", function() {
-          const googleCommand = config.commands["g"];
-          const fallbackUrl = googleCommand.routes[0].fallbackUrl.replace("{args}", encodeURIComponent(query));
-          window.location.href = fallbackUrl;
-        });
-
-        document.addEventListener("keydown", function handler(event) {
-          if (event.key.toLowerCase() === 'g') {
-            const googleCommand = config.commands["g"];
-            const fallbackUrl = googleCommand.routes[0].fallbackUrl.replace("{args}", encodeURIComponent(query));
-            document.removeEventListener("keydown", handler);
-            window.location.href = fallbackUrl;
-          }
-        });
-        return;
-      }
-
-      const commandConfig = config.commands[command];
-      const matchingRoute = findMatchingRoute(commandConfig, deviceType);
-      if (!matchingRoute) {
-        document.getElementById("mainContent").innerHTML =
-          '<h1>Unsupported Device</h1><p>No suitable route found for your device.</p>' +
-          generateCommandTable();
-        return;
-      }
-
-      let targetUrl = matchingRoute.defaultUrl;
-      if (args.length > 0) {
-        for (const patternObj of matchingRoute.customPatterns) {
-          const patternRegex = new RegExp(`^${patternObj.pattern.replace(/{(\\w+)}/g, '(?<$1>\\w+)')}$`);
-          const match = args.join(" ").match(patternRegex);
-          if (match) {
-            targetUrl = patternObj.targetUrl.replace(/{(\w+)}/g, (_, key) => match.groups[key] || "");
-            break;
+      function generateCommandTable() {
+        let table =
+          "<h1>Available Commands</h1><table><tr><th>Command</th><th>Supported Devices</th><th>Default URL</th><th>Custom Patterns</th><th>Fallback URL</th></tr>";
+        for (const [cmd, data] of Object.entries(config.commands)) {
+          for (const route of data.routes) {
+            let patterns = route.customPatterns
+              ? route.customPatterns.map((p) => p.pattern).join(", ")
+              : "None";
+            let devices = Array.isArray(route.supportedDevices)
+              ? route.supportedDevices.join(", ")
+              : "All";
+            table += `<tr><td><strong>${cmd}</strong></td><td>${devices}</td><td>${route.defaultUrl}</td><td>${patterns}</td><td>${route.fallbackUrl}</td></tr>`;
           }
         }
-        if (!targetUrl || targetUrl === matchingRoute.defaultUrl) {
-          targetUrl = matchingRoute.fallbackUrl.replace("{args}", encodeURIComponent(args.join(" ")));
+        table += "</table>";
+        return table;
+      }
+
+      function showAvailableCommands() {
+        document.getElementById("mainContent").innerHTML =
+          generateCommandTable();
+      }
+
+      function processQuery() {
+        const query = parseQueryParam();
+        if (!query) {
+          showAvailableCommands();
+          return;
+        }
+
+        const deviceType = getDeviceType();
+        const [command, ...args] = query.split(" ");
+
+        if (!config.commands[command]) {
+          document.getElementById("mainContent").innerHTML =
+            "<h1>Command Not Recognized</h1>" +
+            '<p>The command "' +
+            command +
+            '" is not recognized. Did you mean to google your query?</p>' +
+            '<button id="googleButton">Google It</button>' +
+            generateCommandTable();
+
+          document
+            .getElementById("googleButton")
+            .addEventListener("click", function () {
+              const googleCommand = config.commands["g"];
+              const fallbackUrl = googleCommand.routes[0].fallbackUrl.replace(
+                "{args}",
+                encodeURIComponent(query)
+              );
+              window.location.href = fallbackUrl;
+            });
+
+          document.addEventListener("keydown", function handler(event) {
+            if (event.key.toLowerCase() === "g") {
+              const googleCommand = config.commands["g"];
+              const fallbackUrl = googleCommand.routes[0].fallbackUrl.replace(
+                "{args}",
+                encodeURIComponent(query)
+              );
+              document.removeEventListener("keydown", handler);
+              window.location.href = fallbackUrl;
+            }
+          });
+          return;
+        }
+
+        const commandConfig = config.commands[command];
+        const matchingRoute = findMatchingRoute(commandConfig, deviceType);
+        if (!matchingRoute) {
+          document.getElementById("mainContent").innerHTML =
+            "<h1>Unsupported Device</h1><p>No suitable route found for your device.</p>" +
+            generateCommandTable();
+          return;
+        }
+
+        let targetUrl = matchingRoute.defaultUrl;
+        if (args.length > 0) {
+          for (const patternObj of matchingRoute.customPatterns) {
+            const patternRegex = new RegExp(
+              `^${patternObj.pattern.replace(/{(\\w+)}/g, "(?<$1>\\w+)")}$`
+            );
+            const match = args.join(" ").match(patternRegex);
+            if (match) {
+              targetUrl = patternObj.targetUrl.replace(
+                /{(\w+)}/g,
+                (_, key) => match.groups[key] || ""
+              );
+              break;
+            }
+          }
+          if (!targetUrl || targetUrl === matchingRoute.defaultUrl) {
+            targetUrl = matchingRoute.fallbackUrl.replace(
+              "{args}",
+              encodeURIComponent(args.join(" "))
+            );
+          }
+        }
+        window.location.href = targetUrl;
+      }
+
+      function submitSearch() {
+        const searchInput = document.getElementById("searchBar");
+        if (searchInput) {
+          const query = searchInput.value.trim();
+          if (query) {
+            window.location.href =
+              window.location.origin + "?q=" + encodeURIComponent(query);
+          }
         }
       }
-      window.location.href = targetUrl;
-    }
 
-
-    function submitSearch() {
-      const searchInput = document.getElementById('searchBar');
-      if (searchInput) {
-        const query = searchInput.value.trim();
-        if (query) {
-          window.location.href = window.location.origin + '?q=' + encodeURIComponent(query);
-        }
+      window.onload = processQuery;
+    </script>
+  </head>
+  <body>
+    <div class="search-bar">
+      <input
+        type="text"
+        id="searchBar"
+        placeholder="Enter search query..."
+        onkeydown="if(event.key === 'Enter') { submitSearch(); }"
+      />
+      <button onclick="submitSearch()">Search</button>
+    </div>
+    <div id="mainContent">
+      <h1>Processing...</h1>
+    </div>
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "@id": "https://bunnylol-clone.kavishhukmani.me/#WebSite",
+        "name": "bunnylol-clone",
+        "description": "Host your own bunnylol clone with GitHub pages",
+        "alternateName": ["bunnylol-clone", "bunnylol", "lolbunny", "bunny"],
+        "url": "https://bunnylol-clone.kavishhukmani.me/"
       }
-    }
-
-    window.onload = processQuery;
-        </script>
-    </head>
-    <body>
-        <div class="search-bar">
-            <input type="text" id="searchBar" placeholder="Enter search query..." onkeydown="if(event.key === 'Enter') { submitSearch(); }" />
-            <button onclick="submitSearch()">Search</button>
-        </div>
-        <div id="mainContent">
-            <h1>Processing...</h1>
-        </div>
-        <script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "WebSite",
-      "@id": "https://bunnylol-clone.kavishhukmani.me/#WebSite",
-      "name": "bunnylol-clone",
-      "description": "Host your own bunnylol clone with GitHub pages",
-      "alternateName": [
-        "bunnylol-clone",
-        "bunnylol",
-        "lolbunny",
-        "bunny"
-      ],
-      "url": "https://bunnylol-clone.kavishhukmani.me/"
-    }
-        </script>
-    </body>
+    </script>
+  </body>
 </html>
