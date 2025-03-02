@@ -10,6 +10,140 @@
         }
       ]
     },
+    "ddg": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://duckduckgo.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://duckduckgo.com/?q={args}"
+        }
+      ]
+    },
+    "bing": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.bing.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.bing.com/search?q={args}"
+        }
+      ]
+    },
+    "gi": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.google.com/imghp",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.google.com/search?tbm=isch&q={args}"
+        }
+      ]
+    },
+    "dict": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.dictionary.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.dictionary.com/browse/{args}"
+        }
+      ]
+    },
+    "wut": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.urbandictionary.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.urbandictionary.com/define.php?term={args}"
+        }
+      ]
+    },
+    "hn": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://news.ycombinator.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://hn.algolia.com/?q={args}"
+        }
+      ]
+    },
+    "cal": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://calendar.google.com",
+          "customPatterns": [
+            {
+              "pattern": "event/{title}/{date}/{time}",
+              "targetUrl": "https://calendar.google.com/calendar/r/eventedit?text={title}&dates={date}T{time}Z"
+            }
+          ],
+          "fallbackUrl": "https://calendar.google.com"
+        }
+      ]
+    },
+    "maps": {
+      "routes": [
+        {
+          "supportedDevices": ["Android", "iOS"],
+          "defaultUrl": "https://maps.google.com",
+          "customPatterns": [
+            {
+              "pattern": "directions/{from}/{to}",
+              "targetUrl": "https://maps.google.com/dir/{from}/{to}"
+            }
+          ],
+          "fallbackUrl": "https://maps.google.com/?q={args}"
+        }
+      ]
+    },
+    "gd": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://drive.google.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://drive.google.com/drive/search?q={args}"
+        }
+      ]
+    },
+    "file": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "file:///",
+          "customPatterns": [
+            {
+              "pattern": "{path}",
+              "targetUrl": "file:///{path}"
+            }
+          ],
+          "fallbackUrl": "file:///"
+        }
+      ]
+    },
+    "mailto": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "mailto:",
+          "customPatterns": [
+            {
+              "pattern": "{email}",
+              "targetUrl": "mailto:{email}"
+            },
+            {
+              "pattern": "{email}?subject={subject}&body={body}",
+              "targetUrl": "mailto:{email}?subject={subject}&body={body}"
+            }
+          ],
+          "fallbackUrl": "mailto:"
+        }
+      ]
+    },
     "yt": {
       "routes": [
         {
@@ -29,18 +163,109 @@
         }
       ]
     },
-    "maps": {
+    "sp": {
       "routes": [
         {
-          "supportedDevices": ["Android", "iOS"],
-          "defaultUrl": "https://maps.google.com",
+          "supportedDevices": "*",
+          "defaultUrl": "https://open.spotify.com",
           "customPatterns": [
             {
-              "pattern": "directions/{from}/{to}",
-              "targetUrl": "https://maps.google.com/dir/{from}/{to}"
+              "pattern": "track/{track_id}",
+              "targetUrl": "https://open.spotify.com/track/{track_id}"
+            },
+            {
+              "pattern": "album/{album_id}",
+              "targetUrl": "https://open.spotify.com/album/{album_id}"
+            },
+            {
+              "pattern": "artist/{artist_id}",
+              "targetUrl": "https://open.spotify.com/artist/{artist_id}"
+            },
+            {
+              "pattern": "playlist/{playlist_id}",
+              "targetUrl": "https://open.spotify.com/playlist/{playlist_id}"
             }
           ],
-          "fallbackUrl": "https://maps.google.com/?q={args}"
+          "fallbackUrl": "https://open.spotify.com/search/{args}"
+        }
+      ]
+    },
+    "gh": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://github.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://github.com/search?q={args}"
+        }
+      ]
+    },
+    "w": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://en.wikipedia.org",
+          "customPatterns": [],
+          "fallbackUrl": "https://en.wikipedia.org/w/index.php?search={args}"
+        }
+      ]
+    },
+    "r": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.reddit.com",
+          "customPatterns": [
+            {
+              "pattern": "r/{subreddit}",
+              "targetUrl": "https://www.reddit.com/r/{subreddit}"
+            },
+            {
+              "pattern": "u/{username}",
+              "targetUrl": "https://www.reddit.com/user/{username}"
+            }
+          ],
+          "fallbackUrl": "https://www.google.com/search?q=site:reddit.com+{args}"
+        }
+      ]
+    },
+    "fb": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.facebook.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.facebook.com/search/top/?q={args}"
+        }
+      ]
+    },
+    "wa": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://web.whatsapp.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://api.whatsapp.com/send?text={args}"
+        }
+      ]
+    },
+    "ig": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.instagram.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.instagram.com/explore/tags/{args}"
+        }
+      ]
+    },
+    "discord": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://discord.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://discord.com"
         }
       ]
     },
@@ -81,108 +306,13 @@
         }
       ]
     },
-    "wiki": {
+    "qq": {
       "routes": [
         {
           "supportedDevices": "*",
-          "defaultUrl": "https://en.wikipedia.org",
+          "defaultUrl": "https://chat.openai.com",
           "customPatterns": [],
-          "fallbackUrl": "https://en.wikipedia.org/w/index.php?search={args}"
-        }
-      ]
-    },
-    "cal": {
-      "routes": [
-        {
-          "supportedDevices": "*",
-          "defaultUrl": "https://calendar.google.com",
-          "customPatterns": [
-            {
-              "pattern": "event/{title}/{date}/{time}",
-              "targetUrl": "https://calendar.google.com/calendar/r/eventedit?text={title}&dates={date}T{time}Z"
-            }
-          ],
-          "fallbackUrl": "https://calendar.google.com"
-        }
-      ]
-    },
-    "r": {
-      "routes": [
-        {
-          "supportedDevices": "*",
-          "defaultUrl": "https://www.reddit.com",
-          "customPatterns": [
-            {
-              "pattern": "r/{subreddit}",
-              "targetUrl": "https://www.reddit.com/r/{subreddit}"
-            },
-            {
-              "pattern": "u/{username}",
-              "targetUrl": "https://www.reddit.com/user/{username}"
-            }
-          ],
-          "fallbackUrl": "https://www.reddit.com/search/?q={args}"
-        }
-      ]
-    },
-    "sp": {
-      "routes": [
-        {
-          "supportedDevices": "*",
-          "defaultUrl": "https://open.spotify.com",
-          "customPatterns": [
-            {
-              "pattern": "track/{track_id}",
-              "targetUrl": "https://open.spotify.com/track/{track_id}"
-            },
-            {
-              "pattern": "album/{album_id}",
-              "targetUrl": "https://open.spotify.com/album/{album_id}"
-            },
-            {
-              "pattern": "artist/{artist_id}",
-              "targetUrl": "https://open.spotify.com/artist/{artist_id}"
-            },
-            {
-              "pattern": "playlist/{playlist_id}",
-              "targetUrl": "https://open.spotify.com/playlist/{playlist_id}"
-            }
-          ],
-          "fallbackUrl": "https://open.spotify.com/search/{args}"
-        }
-      ]
-    },
-    "mailto": {
-      "routes": [
-        {
-          "supportedDevices": "*",
-          "defaultUrl": "mailto:",
-          "customPatterns": [
-            {
-              "pattern": "{email}",
-              "targetUrl": "mailto:{email}"
-            },
-            {
-              "pattern": "{email}?subject={subject}&body={body}",
-              "targetUrl": "mailto:{email}?subject={subject}&body={body}"
-            }
-          ],
-          "fallbackUrl": "mailto:"
-        }
-      ]
-    },
-    "file": {
-      "routes": [
-        {
-          "supportedDevices": "*",
-          "defaultUrl": "file:///",
-          "customPatterns": [
-            {
-              "pattern": "{path}",
-              "targetUrl": "file:///{path}"
-            }
-          ],
-          "fallbackUrl": "file:///"
+          "fallbackUrl": "https://chat.openai.com/?q={args}"
         }
       ]
     }
