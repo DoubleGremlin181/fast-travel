@@ -312,13 +312,15 @@
         }
 
         const deviceType = getDeviceType();
-        const [command, ...args] = query.split(" ");
+        // Convert the command to lowercase for case-insensitive matching
+        const [rawCommand, ...args] = query.split(" ");
+        const command = rawCommand.toLowerCase();
 
         if (!config.commands[command]) {
           document.getElementById("mainContent").innerHTML =
             "<h1>Command Not Recognized</h1>" +
             '<p>The command "' +
-            command +
+            rawCommand +
             '" is not recognized. Did you mean to google your query?</p>' +
             '<button id="googleButton">Google It</button>' +
             generateCommandTable();
@@ -360,8 +362,10 @@
         let targetUrl = matchingRoute.defaultUrl;
         if (args.length > 0) {
           for (const patternObj of matchingRoute.customPatterns) {
+            // Add the "i" flag for case-insensitive matching
             const patternRegex = new RegExp(
-              `^${patternObj.pattern.replace(/{(\\w+)}/g, "(?<$1>\\w+)")}$`
+              `^${patternObj.pattern.replace(/{(\\w+)}/g, "(?<$1>\\w+)")}$`,
+              "i"
             );
             const match = args.join(" ").match(patternRegex);
             if (match) {
