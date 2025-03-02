@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-    <ShortName>bunnylol-clone</ShortName>
-    <Description>Host your own bunnylol-clone with GitHub pages</Description>
-    <Url type="text/html" template="https://bunnylol-clone.kavishhukmani.me?q={searchTerms}" />
+    <ShortName>Waypoint</ShortName>
+    <Description>A Bunnylol-inspired, configurable command-based search engine replacement hosted
+        with GitHub Pages</Description>
+    <Url type="text/html" template="https://waypoint.kavishhukmani.me?q={searchTerms}" />
     <Url type="application/opensearchdescription+xml" rel="self"
-        template="https://bunnylol-clone.kavishhukmani.me/opensearch.xml" />
+        template="https://waypoint.kavishhukmani.me/opensearch.xml" />
     <InputEncoding>UTF-8</InputEncoding>
     <Image height="16" width="16" type="image/x-icon">
         https://raw.githubusercontent.com/doublegremlin181/doublegremlin181.github.io/refs/heads/master/assets/images/favicon/favicon.ico</Image>
