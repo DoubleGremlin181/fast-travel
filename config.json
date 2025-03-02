@@ -195,7 +195,20 @@
         {
           "supportedDevices": "*",
           "defaultUrl": "https://github.com",
-          "customPatterns": [],
+          "customPatterns": [
+            {
+              "pattern": "u/{username}",
+              "targetUrl": "https://github.com/search?q={username}&type=users"
+            },
+            {
+              "pattern": "r/{repo}",
+              "targetUrl": "https://github.com/search?q={repo}&type=repositories"
+            },
+            {
+              "pattern": "{username}/{repo}",
+              "targetUrl": "https://github.com/{username}/{repo}"
+            }
+          ],
           "fallbackUrl": "https://github.com/search?q={args}"
         }
       ]
