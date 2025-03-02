@@ -21,24 +21,10 @@
         font-family: Arial, sans-serif;
         text-align: center;
         padding: 20px;
+        margin: 0;
       }
-      .info {
-        margin-top: 20px;
-        font-size: 18px;
-      }
-      table {
-        width: 80%;
-        margin: auto;
-        border-collapse: collapse;
-      }
-      th,
-      td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: left;
-      }
-      th {
-        background-color: #f2f2f2;
+      header {
+        margin-bottom: 20px;
       }
       .search-bar {
         margin-bottom: 20px;
@@ -52,108 +38,120 @@
         padding: 8px 12px;
         font-size: 16px;
       }
+      main {
+        min-height: 200px;
+      }
+      table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #333;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
     </style>
   </head>
   <body>
-    <div class="search-bar">
-      <input
-        type="text"
-        id="searchBar"
-        placeholder="Enter search query..."
-        onkeydown="if(event.key === 'Enter') { submitSearch(); }"
-      />
-      <button onclick="submitSearch()">Search</button>
-    </div>
-    <div id="mainContent">
+    <header>
+      <div class="search-bar">
+        <input
+          type="text"
+          id="searchBar"
+          placeholder="Enter search query..."
+          onkeydown="if(event.key==='Enter') submitSearch();"
+        />
+        <button onclick="submitSearch()">Search</button>
+      </div>
+    </header>
+    <main id="mainContent">
       <h1>Processing...</h1>
-    </div>
+    </main>
     <script>
-      // Global variable to check if debug mode is enabled.
-      const isDebug =
-        new URLSearchParams(window.location.search).get("debug") === "true";
+      const isDebug = new URLSearchParams(window.location.search).get("debug") === "true";
 
       function getDeviceType() {
-        const userAgent = navigator.userAgent;
-        if (/Windows NT/i.test(userAgent)) return "Windows";
-        if (/Macintosh|Mac OS X/i.test(userAgent)) return "MacOS";
-        if (/Android/i.test(userAgent)) return "Android";
-        if (/Linux/i.test(userAgent)) return "Linux";
-        if (/iPhone|iPad|iPod/i.test(userAgent)) return "iOS";
+        const ua = navigator.userAgent;
+        if (/Windows NT/i.test(ua)) return "Windows";
+        if (/Macintosh|Mac OS X/i.test(ua)) return "MacOS";
+        if (/Android/i.test(ua)) return "Android";
+        if (/Linux/i.test(ua)) return "Linux";
+        if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
         return "Unknown";
       }
 
-      function parseQueryParam() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get("q")?.trim() || "";
+      function parseQuery() {
+        return new URLSearchParams(window.location.search).get("q")?.trim() || "";
       }
 
       function findMatchingRoute(commandConfig, deviceType) {
-        let matchingRoute = commandConfig.routes.find((route) =>
-          route.supportedDevices.includes(deviceType)
+        // First try to find a route that explicitly supports the device type.
+        let route = commandConfig.routes.find(r =>
+          Array.isArray(r.supportedDevices) && r.supportedDevices.includes(deviceType)
         );
-        if (!matchingRoute) {
-          matchingRoute = commandConfig.routes.find(
-            (route) =>
-              route.supportedDevices === "*" ||
-              (Array.isArray(route.supportedDevices) &&
-                route.supportedDevices.includes("Unknown"))
-          );
-        }
-        return matchingRoute;
+        // Fallback to a wildcard or "Unknown" support.
+        return (
+          route ||
+          commandConfig.routes.find(
+            r =>
+              r.supportedDevices === "*" ||
+              (Array.isArray(r.supportedDevices) && r.supportedDevices.includes("Unknown"))
+          )
+        );
       }
 
       function generateCommandTable() {
-        let table =
-          "<h1>Available Commands</h1><table><tr><th>Command</th><th>Supported Devices</th><th>Default URL</th><th>Custom Patterns</th><th>Fallback URL</th></tr>";
-        for (const [cmd, data] of Object.entries(config.commands)) {
-          for (const route of data.routes) {
-            let patterns = route.customPatterns
-              ? route.customPatterns.map((p) => p.pattern).join(", ")
-              : "None";
-            let devices = Array.isArray(route.supportedDevices)
-              ? route.supportedDevices.join(", ")
-              : "All";
-            table += `<tr><td><strong>${cmd}</strong></td><td>${devices}</td><td>${route.defaultUrl}</td><td>${patterns}</td><td>${route.fallbackUrl}</td></tr>`;
-          }
-        }
-        table += "</table>";
-        return table;
+        let html = `<h1>Available Commands</h1>
+          <table>
+            <tr>
+              <th>Command</th>
+              <th>Supported Devices</th>
+              <th>Default URL</th>
+              <th>Custom Patterns</th>
+              <th>Fallback URL</th>
+            </tr>`;
+        Object.entries(config.commands).forEach(([cmd, data]) => {
+          data.routes.forEach(route => {
+            const patterns = route.customPatterns ? route.customPatterns.map(p => p.pattern).join(", ") : "None";
+            const devices = Array.isArray(route.supportedDevices) ? route.supportedDevices.join(", ") : "All";
+            html += `<tr>
+              <td><strong>${cmd}</strong></td>
+              <td>${devices}</td>
+              <td>${route.defaultUrl}</td>
+              <td>${patterns}</td>
+              <td>${route.fallbackUrl}</td>
+            </tr>`;
+          });
+        });
+        return html + "</table>";
       }
 
       function showAvailableCommands() {
-        document.getElementById("mainContent").innerHTML =
-          generateCommandTable();
+        document.getElementById("mainContent").innerHTML = generateCommandTable();
       }
 
-      function delayedRedirect(url) {
+      function redirectHelper(url) {
         if (isDebug) {
-          console.log(
-            "Debug - delaying redirect for 3000ms. Redirecting to: " + url
-          );
-          setTimeout(() => {
-            window.location.href = url;
-          }, 3000);
+          console.log("Debug: Delaying redirect to", url);
+          setTimeout(() => (window.location.href = url), 3000);
         } else {
           window.location.href = url;
         }
       }
 
       function processQuery() {
-        const query = parseQueryParam();
+        const query = parseQuery();
         const deviceType = getDeviceType();
-        let rawCommand = "";
-        let args = [];
-        if (query) {
-          [rawCommand, ...args] = query.split(" ");
-        }
+        let [rawCommand, ...args] = query ? query.split(" ") : [];
 
         if (isDebug) {
-          console.log("Debug - Device Type: " + deviceType);
-          if (rawCommand) {
-            console.log("Debug - Command: " + rawCommand);
-          } else {
-            console.log("Debug - No command provided");
-          }
+          console.log("Debug: Device Type:", deviceType);
+          console.log("Debug: Command:", rawCommand || "None");
         }
 
         if (!query) {
@@ -161,39 +159,26 @@
           return;
         }
 
-        // Convert the command to lowercase for case-insensitive matching
         const command = rawCommand.toLowerCase();
 
         if (!config.commands[command]) {
-          document.getElementById("mainContent").innerHTML =
-            "<h1>Command Not Recognized</h1>" +
-            '<p>The command "' +
-            rawCommand +
-            '" is not recognized. Did you mean to google your query?</p>' +
-            '<button id="googleButton">Google It</button>' +
-            generateCommandTable();
-
-          document
-            .getElementById("googleButton")
-            .addEventListener("click", function () {
-              const googleCommand = config.commands["g"];
-              const fallbackUrl = googleCommand.routes[0].fallbackUrl.replace(
-                "{args}",
-                encodeURIComponent(query)
-              );
-              delayedRedirect(fallbackUrl);
-            });
-
+          const mainContent = document.getElementById("mainContent");
+          mainContent.innerHTML = `
+            <h1>Command Not Recognized</h1>
+            <p>The command "${rawCommand}" is not recognized. Did you mean to google your query?</p>
+            <button id="googleButton">Google It</button>
+            ${generateCommandTable()}`;
+          document.getElementById("googleButton").addEventListener("click", () => {
+            const googleCmd = config.commands["g"];
+            const url = googleCmd.routes[0].fallbackUrl.replace("{args}", encodeURIComponent(query));
+            redirectHelper(url);
+          });
           document.addEventListener("keydown", function handler(event) {
             if (event.key.toLowerCase() === "g") {
-              const googleCommand = config.commands["g"];
-              const fallbackUrl = googleCommand.routes[0].fallbackUrl.replace(
-                "{args}",
-                encodeURIComponent(query)
-              );
+              const googleCmd = config.commands["g"];
+              const url = googleCmd.routes[0].fallbackUrl.replace("{args}", encodeURIComponent(query));
               document.removeEventListener("keydown", handler);
-              console.log("Debug - Key 'g' pressed. Initiating redirect.");
-              delayedRedirect(fallbackUrl);
+              redirectHelper(url);
             }
           });
           return;
@@ -202,58 +187,41 @@
         const commandConfig = config.commands[command];
         const matchingRoute = findMatchingRoute(commandConfig, deviceType);
         if (!matchingRoute) {
-          document.getElementById("mainContent").innerHTML =
-            "<h1>Unsupported Device</h1><p>No suitable route found for your device.</p>" +
-            generateCommandTable();
+          document.getElementById("mainContent").innerHTML = `
+            <h1>Unsupported Device</h1>
+            <p>No suitable route found for your device.</p>
+            ${generateCommandTable()}`;
           return;
         }
 
         let targetUrl = matchingRoute.defaultUrl;
-        if (args.length > 0) {
-          for (const patternObj of matchingRoute.customPatterns) {
-            const patternRegex = new RegExp(
-              `^${patternObj.pattern.replace(/{(\\w+)}/g, "(?<$1>\\w+)")}$`,
-              "i"
-            );
-            const match = args.join(" ").match(patternRegex);
+        if (args.length) {
+          const joinedArgs = args.join(" ");
+          for (const { pattern, targetUrl: targetPatternUrl } of matchingRoute.customPatterns || []) {
+            const regex = new RegExp(`^${pattern.replace(/{(\\w+)}/g, "(?<$1>\\w+)")}$`, "i");
+            const match = joinedArgs.match(regex);
             if (match) {
-              targetUrl = patternObj.targetUrl.replace(
-                /{(\w+)}/g,
-                (_, key) => match.groups[key] || ""
-              );
+              targetUrl = targetPatternUrl.replace(/{(\w+)}/g, (_, key) => match.groups[key] || "");
               break;
             }
           }
           if (!targetUrl || targetUrl === matchingRoute.defaultUrl) {
-            targetUrl = matchingRoute.fallbackUrl.replace(
-              "{args}",
-              encodeURIComponent(args.join(" "))
-            );
+            targetUrl = matchingRoute.fallbackUrl.replace("{args}", encodeURIComponent(joinedArgs));
           }
         }
-        delayedRedirect(targetUrl);
+        redirectHelper(targetUrl);
       }
 
       function submitSearch() {
-        const searchInput = document.getElementById("searchBar");
-        if (searchInput) {
-          const query = searchInput.value.trim();
-          if (query) {
-            if (isDebug) {
-              console.log("Debug - Search bar used: " + query);
-            }
-            // Preserve debug mode for the new search if it's enabled.
-            const redirectUrl =
-              window.location.origin +
-              "?q=" +
-              encodeURIComponent(query) +
-              (isDebug ? "&debug=true" : "");
-            delayedRedirect(redirectUrl);
-          }
+        const query = document.getElementById("searchBar").value.trim();
+        if (query) {
+          const redirectUrl = `${window.location.origin}?q=${encodeURIComponent(query)}${
+            isDebug ? "&debug=true" : ""
+          }`;
+          redirectHelper(redirectUrl);
         }
       }
 
-      // Asynchronously load the configuration from config.json and then process the query.
       async function loadConfig() {
         try {
           const response = await fetch("config.json");
@@ -264,7 +232,7 @@
         }
       }
 
-      window.onload = loadConfig;
+      window.addEventListener("load", loadConfig);
     </script>
     <script type="application/ld+json">
       {
