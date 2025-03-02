@@ -252,6 +252,9 @@
         },
       };
 
+      // Global variable to check if debug mode is enabled.
+      const isDebug = new URLSearchParams(window.location.search).get("debug") === "true";
+
       function getDeviceType() {
         const userAgent = navigator.userAgent;
         if (/Windows NT/i.test(userAgent)) return "Windows";
@@ -304,16 +307,43 @@
           generateCommandTable();
       }
 
+      // A helper to handle delayed redirection in debug mode.
+      function delayedRedirect(url) {
+        if (isDebug) {
+          console.log("Debug - delaying redirect for 3000ms. Redirecting to: " + url);
+          setTimeout(function () {
+            window.location.href = url;
+          }, 3000);
+        } else {
+          window.location.href = url;
+        }
+      }
+
       function processQuery() {
         const query = parseQueryParam();
+        const deviceType = getDeviceType();
+        let rawCommand = "";
+        let args = [];
+        if (query) {
+          [rawCommand, ...args] = query.split(" ");
+        }
+
+        // If debug is enabled, log the command (if present) and device type
+        if (isDebug) {
+          if (rawCommand) {
+            console.log("Debug - Command: " + rawCommand);
+          } else {
+            console.log("Debug - No command provided");
+          }
+          console.log("Debug - Device Type: " + deviceType);
+        }
+
         if (!query) {
           showAvailableCommands();
           return;
         }
 
-        const deviceType = getDeviceType();
         // Convert the command to lowercase for case-insensitive matching
-        const [rawCommand, ...args] = query.split(" ");
         const command = rawCommand.toLowerCase();
 
         if (!config.commands[command]) {
@@ -325,16 +355,14 @@
             '<button id="googleButton">Google It</button>' +
             generateCommandTable();
 
-          document
-            .getElementById("googleButton")
-            .addEventListener("click", function () {
-              const googleCommand = config.commands["g"];
-              const fallbackUrl = googleCommand.routes[0].fallbackUrl.replace(
-                "{args}",
-                encodeURIComponent(query)
-              );
-              window.location.href = fallbackUrl;
-            });
+          document.getElementById("googleButton").addEventListener("click", function () {
+            const googleCommand = config.commands["g"];
+            const fallbackUrl = googleCommand.routes[0].fallbackUrl.replace(
+              "{args}",
+              encodeURIComponent(query)
+            );
+            delayedRedirect(fallbackUrl);
+          });
 
           document.addEventListener("keydown", function handler(event) {
             if (event.key.toLowerCase() === "g") {
@@ -344,7 +372,8 @@
                 encodeURIComponent(query)
               );
               document.removeEventListener("keydown", handler);
-              window.location.href = fallbackUrl;
+              console.log("Debug - Key 'g' pressed. Initiating redirect.");
+              delayedRedirect(fallbackUrl);
             }
           });
           return;
@@ -383,7 +412,7 @@
             );
           }
         }
-        window.location.href = targetUrl;
+        delayedRedirect(targetUrl);
       }
 
       function submitSearch() {
@@ -391,8 +420,16 @@
         if (searchInput) {
           const query = searchInput.value.trim();
           if (query) {
-            window.location.href =
-              window.location.origin + "?q=" + encodeURIComponent(query);
+            if (isDebug) {
+              console.log("Debug - Search bar used: " + query);
+            }
+            // Preserve debug mode for the new search if it's enabled.
+            const redirectUrl =
+              window.location.origin +
+              "?q=" +
+              encodeURIComponent(query) +
+              (isDebug ? "&debug=true" : "");
+            delayedRedirect(redirectUrl);
           }
         }
       }
