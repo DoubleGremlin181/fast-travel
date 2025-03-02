@@ -356,7 +356,7 @@
             targetUrl: targetPatternUrl,
           } of matchingRoute.customPatterns || []) {
             const regex = new RegExp(
-              `^${pattern.replace(/{(\\w+)}/g, "(?<$1>\\w+)")}$`,
+              `^${pattern.replace(/{(\w+)}/g, "(?<$1>[^/]+)")}$`,
               "i"
             );
             const match = joinedArgs.match(regex);
