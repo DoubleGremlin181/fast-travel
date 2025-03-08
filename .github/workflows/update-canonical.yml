@@ -27,13 +27,13 @@ jobs:
 
       - name: Update canonical URL in index.html
         run: |
-          echo "Replacing ${{ env.old_domain }} with ${{ env.new_domain }} in index.html"
-          sed -i "s|${{ env.old_domain }}|${{ env.new_domain }}|g" index.html
+          echo "Replacing ${old_domain} with ${new_domain} in index.html"
+          sed -i "s|${old_domain}|${new_domain}|g" index.html
 
       - name: Update canonical URL in opensearch.xml
         run: |
-          echo "Replacing ${{ env.old_domain }} with ${{ env.new_domain }} in opensearch.xml"
-          sed -i "s|${{ env.old_domain }}|${{ env.new_domain }}|g" opensearch.xml
+          echo "Replacing ${old_domain} with ${new_domain} in opensearch.xml"
+          sed -i "s|${old_domain}|${new_domain}|g" opensearch.xml
 
       - name: Commit and push changes
         run: |
