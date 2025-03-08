@@ -1,0 +1,44 @@
+# .github/workflows/update-canonical.yml
+name: Update Canonical URL from CNAME
+
+on:
+  push:
+    paths:
+      - "CNAME"
+  workflow_dispatch:
+
+jobs:
+  update-canonical:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Read new domain from CNAME file
+        id: get_new_domain
+        run: echo "new_domain=$(cat CNAME)" >> $GITHUB_ENV
+
+      - name: Extract old domain from index.html
+        id: get_old_domain
+        run: |
+          old_domain=$(grep -oP -m 1 'href="https://\K[^"]+' index.html)
+          echo "old_domain=$old_domain" >> $GITHUB_ENV
+          echo "Old domain found: $old_domain"
+
+      - name: Update canonical URL in index.html
+        run: |
+          echo "Replacing ${{ env.old_domain }} with ${{ env.new_domain }} in index.html"
+          sed -i "s|${{ env.old_domain }}|${{ env.new_domain }}|g" index.html
+
+      - name: Update canonical URL in opensearch.xml
+        run: |
+          echo "Replacing ${{ env.old_domain }} with ${{ env.new_domain }} in opensearch.xml"
+          sed -i "s|${{ env.old_domain }}|${{ env.new_domain }}|g" opensearch.xml
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add .
+          git commit -m "Update canonical URL based on new CNAME" || echo "No changes to commit"
+          git push
