@@ -8,5 +8,5 @@
         template="https://waypoint.kavishhukmani.me/opensearch.xml" />
     <InputEncoding>UTF-8</InputEncoding>
     <Image height="16" width="16" type="image/x-icon">
-        https://raw.githubusercontent.com/doublegremlin181/waypoint/refs/heads/favicon.ico</Image>
+        https://raw.githubusercontent.com/DoubleGremlin181/waypoint/refs/heads/main/favicon.ico</Image>
 </OpenSearchDescription>
