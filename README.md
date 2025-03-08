@@ -4,6 +4,10 @@ A Bunnylol-inspired, configurable command-based search engine replacement hosted
 
 # Credits
 
+## Ten Blue Links
+
+Thanks to [Ten Blue Links](https://tenbluelinks.org/) for being a valuable reference on how to replace the default search engine.
+
 ## Favicon
 
 This favicon was generated using the following graphics from Twitter Twemoji:
