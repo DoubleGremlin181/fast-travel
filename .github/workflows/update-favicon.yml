@@ -1,0 +1,28 @@
+name: Update Favicon on Repository Change
+
+on:
+  fork:
+  workflow_dispatch:
+
+jobs:
+  update-favicon:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Update favicon URL in index.html
+        run: |
+          sed -i "s|DoubleGremlin181/waypoint|${GITHUB_REPOSITORY}|g" index.html
+
+      - name: Update favicon URL in opensearch.xml
+        run: |
+          sed -i "s|DoubleGremlin181/waypoint|${GITHUB_REPOSITORY}|g" opensearch.xml
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add .
+          git commit -m "Update favicon URL based on new GITHUB_REPOSITORY" || echo "No changes to commit"
+          git push
