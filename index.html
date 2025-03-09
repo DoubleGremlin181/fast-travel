@@ -3,15 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Waypoint</title>
+    <title>Fast Travel</title>
     <link
       rel="search"
       type="application/opensearchdescription+xml"
-      title="Waypoint Search"
+      title="Fast Travel"
       href="/opensearch.xml"
     />
     <link rel="canonical" href="https://fast-travel.kavishhukmani.me" />
-    <meta property="og:site_name" content="waypoint" />
+    <meta property="og:site_name" content="fast-travel" />
     <link
       rel="icon"
       href="https://raw.githubusercontent.com/DoubleGremlin181/fast-travel/refs/heads/main/favicon.ico"
@@ -40,10 +40,16 @@
         margin-bottom: 20px;
       }
       .header-title {
-        font-size: 1.3em;
+        font-size: 1.5em;
         font-weight: bold;
         text-align: left;
-        margin-bottom: 10px;
+        margin-bottom: 4px;
+      }
+      .header-tagline {
+        font-size: 1em;
+        color: #555;
+        text-align: left;
+        margin-bottom: 20px;
       }
       /* Search Bar Styles */
       .search-bar {
@@ -148,7 +154,8 @@
         }
       }
       @media (max-width: 480px) {
-        .header-title {
+        .header-title,
+        .header-tagline {
           text-align: center;
         }
         .search-bar {
@@ -204,7 +211,8 @@
   <body>
     <div class="container">
       <header>
-        <div class="header-title">Waypoint</div>
+        <div class="header-title">Fast Travel</div>
+        <div class="header-tagline">Supercharge your search bar</div>
         <div class="search-bar">
           <input
             type="text"
@@ -442,9 +450,15 @@
         "@context": "http://schema.org",
         "@type": "WebSite",
         "@id": "https://fast-travel.kavishhukmani.me/#WebSite",
-        "name": "Waypoint Search",
+        "name": "Fast Travel",
         "description": "A Bunnylol-inspired, configurable command-based search engine replacement hosted with GitHub Pages",
-        "alternateName": ["waypoint", "waypoint search", "bunnylol", "bunny"],
+        "alternateName": [
+          "fast-travel",
+          "fast travel",
+          "fast-travel search",
+          "bunnylol",
+          "bunny"
+        ],
         "url": "https://fast-travel.kavishhukmani.me/"
       }
     </script>

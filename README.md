@@ -1,6 +1,8 @@
-# Waypoint
+# Fast Travel
 
-A Bunnylol-inspired, configurable command-based search engine replacement hosted with GitHub Pages.
+**Supercharge your search bar**
+
+Fast Travel is a Bunnylol-inspired, configurable command-based search engine replacement that you can easily host on GitHub Pages. Customize your commands and streamline your searches with a lightweight, static engine designed for speed and simplicity.
 
 ## Credits
 
