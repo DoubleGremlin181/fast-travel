@@ -3,9 +3,9 @@
     <ShortName>Waypoint</ShortName>
     <Description>A Bunnylol-inspired, configurable command-based search engine replacement hosted
         with GitHub Pages</Description>
-    <Url type="text/html" template="https://waypoint.kavishhukmani.me?q={searchTerms}" />
+    <Url type="text/html" template="https://fast-travel.kavishhukmani.me?q={searchTerms}" />
     <Url type="application/opensearchdescription+xml" rel="self"
-        template="https://waypoint.kavishhukmani.me/opensearch.xml" />
+        template="https://fast-travel.kavishhukmani.me/opensearch.xml" />
     <InputEncoding>UTF-8</InputEncoding>
     <Image height="16" width="16" type="image/x-icon">
         https://raw.githubusercontent.com/DoubleGremlin181/waypoint/refs/heads/main/favicon.ico</Image>
