@@ -62,7 +62,18 @@ Fast Travel works similarly to search bangs—but without the need for an exclam
     2. Right-click on the address bar and choose **Add Fast Travel**.
     3. Open the hamburger menu in the top-right corner, then go to **Settings > Search**.
     4. In the "Default Search Engine" section, select **Fast Travel** from the drop-down menu.
-    5. Done!
+    </details>
+
+    <details>
+    <summary><strong>Firefox on Android/iOS</strong></summary>
+
+    1. Tap the three dots in the top-right corner.
+    2. Choose **Settings**, then **Search**.
+    3. Select **Default Search Engine**, then **+ Add Search Engine**
+    4. Fill in the details:
+    - **Name:** Fast Travel
+    - **Search string URL:** `https://fast-travel.yourdomain.com?q=%s`
+    5. Select Fast Travel
     </details>
 
     **Note:**  
