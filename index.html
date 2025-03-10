@@ -447,9 +447,6 @@
             <div class="error-container">
               <p class="error-message">Command "<strong>${rawCommand}</strong>" not recognized.${suggestionHTML}</p>
               <div class="button-container">
-                <button id="googleButton" class="error-btn">
-                  Search on Google <span class="shortcut-hint">(g)</span>
-                </button>
                 ${
                   suggested
                     ? `<button id="suggestedButton" class="error-btn">
@@ -457,6 +454,9 @@
                 </button>`
                     : ""
                 }
+                <button id="googleButton" class="error-btn">
+                  Search on Google <span class="shortcut-hint">(g)</span>
+                </button>
               </div>
             </div>
             ${generateCommandList()}
