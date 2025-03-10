@@ -144,6 +144,44 @@
       .route-details p {
         margin: 4px 0;
       }
+      /* Error Display Styles */
+      .error-container {
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 0 15px 15px 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+      }
+      .error-message {
+        font-size: 1em;
+        margin-bottom: 10px;
+      }
+      .error-suggestion {
+        font-size: 1em;
+        margin-bottom: 10px;
+      }
+      /* Stack the buttons vertically with a gap */
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+      /* Standardized button style for error actions */
+      .error-btn {
+        padding: 10px;
+        font-size: 1em;
+        border: none;
+        background-color: #4285f4;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+        text-align: left;
+      }
+      .error-btn:hover {
+        background-color: #357ae8;
+      }
       /* Responsive Adjustments */
       @media (min-width: 768px) {
         .container {
@@ -203,6 +241,16 @@
           background-color: #4285f4;
         }
         .google-btn:hover {
+          background-color: #357ae8;
+        }
+        .error-container {
+          border: 1px solid #444;
+          background-color: #1e1e1e;
+        }
+        .error-btn {
+          background-color: #4285f4;
+        }
+        .error-btn:hover {
           background-color: #357ae8;
         }
       }
@@ -393,24 +441,26 @@
           const suggested = findClosestCommand(command);
           let suggestionHTML = "";
           if (suggested) {
-            suggestionHTML = `<p style="font-size: 1em; margin-bottom: 10px;">
-                Did you mean "<strong>${suggested}</strong>"? Press <strong>y</strong> to use it.
-              </p>
-              <button id="suggestedButton" class="google-btn">
-                Use "${suggested}"<span class="shortcut-hint">(y)</span>
-              </button>`;
+            suggestionHTML = `<span class="error-suggestion"> Did you mean "<strong>${suggested}</strong>"?</span>`;
           }
           mainContent.innerHTML = `
-            <div style="text-align: center; margin-bottom: 20px;">
-              <p style="font-size: 1em; margin-bottom: 10px;">
-                The command "${rawCommand}" is not recognized.
-              </p>
-              ${suggestionHTML}
-              <button id="googleButton" class="google-btn">
-                Google It<span class="shortcut-hint">(g)</span>
-              </button>
+            <div class="error-container">
+              <p class="error-message">Command "<strong>${rawCommand}</strong>" not recognized.${suggestionHTML}</p>
+              <div class="button-container">
+                <button id="googleButton" class="error-btn">
+                  Search on Google <span class="shortcut-hint">(g)</span>
+                </button>
+                ${
+                  suggested
+                    ? `<button id="suggestedButton" class="error-btn">
+                  Use suggestion: ${suggested} <span class="shortcut-hint">(y)</span>
+                </button>`
+                    : ""
+                }
+              </div>
             </div>
-            ${generateCommandList()}`;
+            ${generateCommandList()}
+          `;
 
           document
             .getElementById("googleButton")
