@@ -13,11 +13,11 @@ jobs:
 
       - name: Update favicon URL in index.html
         run: |
-          sed -i "s|DoubleGremlin181/waypoint|${GITHUB_REPOSITORY}|g" index.html
+          sed -i "s|https://raw.githubusercontent.com/DoubleGremlin181/fast-travel/refs/heads/main/favicon.ico|https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/refs/heads/main/favicon.ico|g" index.html
 
       - name: Update favicon URL in opensearch.xml
         run: |
-          sed -i "s|DoubleGremlin181/waypoint|${GITHUB_REPOSITORY}|g" opensearch.xml
+          sed -i "s|https://raw.githubusercontent.com/DoubleGremlin181/fast-travel/refs/heads/main/favicon.ico|https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/refs/heads/main/favicon.ico|g" opensearch.xml
 
       - name: Commit and push changes
         run: |
