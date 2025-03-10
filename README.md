@@ -120,6 +120,8 @@ For instance, the `apps` command provides different routing options depending on
 - **Order of Processing:**  
   The file is parsed sequentially. If a query matches multiple patterns, the first match is used. Arrange your custom patterns accordingly to ensure the desired behavior.
 
+Tip: Adding `debug=true` to the URL parameters prints debug statements to the console and adds a 3s delay.
+
 ## Credits
 
 ### Ten Blue Links
