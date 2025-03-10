@@ -265,6 +265,46 @@
         );
       }
 
+      function levenshtein(a, b) {
+        const matrix = [];
+        for (let i = 0; i <= b.length; i++) {
+          matrix[i] = [i];
+        }
+        for (let j = 0; j <= a.length; j++) {
+          matrix[0][j] = j;
+        }
+        for (let i = 1; i <= b.length; i++) {
+          for (let j = 1; j <= a.length; j++) {
+            if (b.charAt(i - 1) === a.charAt(j - 1)) {
+              matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+              matrix[i][j] = Math.min(
+                matrix[i - 1][j - 1] + 1, // substitution
+                matrix[i][j - 1] + 1, // insertion
+                matrix[i - 1][j] + 1 // deletion
+              );
+            }
+          }
+        }
+        return matrix[b.length][a.length];
+      }
+
+      function findClosestCommand(input) {
+        if (!window.config) return null;
+        let closest = null;
+        let minDistance = Infinity;
+        Object.keys(config.commands).forEach(function (cmd) {
+          const distance = levenshtein(input, cmd);
+          if (distance < minDistance) {
+            minDistance = distance;
+            closest = cmd;
+          }
+        });
+        // For short commands (<=3 characters) use a threshold of 1, otherwise 2.
+        const threshold = input.length <= 3 ? 1 : 2;
+        return minDistance <= threshold ? closest : null;
+      }
+
       // Collapse any open command details, then toggle the target.
       function toggleCommandDetails(id) {
         const details = document.querySelectorAll(".command-details");
@@ -350,16 +390,28 @@
 
         if (!config.commands[command]) {
           const mainContent = document.getElementById("mainContent");
+          const suggested = findClosestCommand(command);
+          let suggestionHTML = "";
+          if (suggested) {
+            suggestionHTML = `<p style="font-size: 1em; margin-bottom: 10px;">
+                Did you mean "<strong>${suggested}</strong>"? Press <strong>y</strong> to use it.
+              </p>
+              <button id="suggestedButton" class="google-btn">
+                Use "${suggested}"<span class="shortcut-hint">(y)</span>
+              </button>`;
+          }
           mainContent.innerHTML = `
             <div style="text-align: center; margin-bottom: 20px;">
               <p style="font-size: 1em; margin-bottom: 10px;">
-                The command "${rawCommand}" is not recognized. Did you mean to google your query?
+                The command "${rawCommand}" is not recognized.
               </p>
+              ${suggestionHTML}
               <button id="googleButton" class="google-btn">
                 Google It<span class="shortcut-hint">(g)</span>
               </button>
             </div>
             ${generateCommandList()}`;
+
           document
             .getElementById("googleButton")
             .addEventListener("click", () => {
@@ -370,6 +422,22 @@
               );
               redirectHelper(url);
             });
+
+          if (suggested) {
+            document
+              .getElementById("suggestedButton")
+              .addEventListener("click", () => {
+                const newQuery =
+                  suggested + (args.length ? " " + args.join(" ") : "");
+                const redirectUrl =
+                  window.location.origin +
+                  "?q=" +
+                  encodeURIComponent(newQuery) +
+                  (isDebug ? "&debug=true" : "");
+                redirectHelper(redirectUrl);
+              });
+          }
+
           document.addEventListener("keydown", function handler(event) {
             if (event.key.toLowerCase() === "g") {
               const googleCmd = config.commands["g"];
@@ -379,6 +447,17 @@
               );
               document.removeEventListener("keydown", handler);
               redirectHelper(url);
+            }
+            if (suggested && event.key.toLowerCase() === "y") {
+              const newQuery =
+                suggested + (args.length ? " " + args.join(" ") : "");
+              const redirectUrl =
+                window.location.origin +
+                "?q=" +
+                encodeURIComponent(newQuery) +
+                (isDebug ? "&debug=true" : "");
+              document.removeEventListener("keydown", handler);
+              redirectHelper(redirectUrl);
             }
           });
           return;
