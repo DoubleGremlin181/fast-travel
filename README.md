@@ -14,6 +14,13 @@ For example:
 
 Fast Travel works similarly to search bangs—but without the need for an exclamation mark—and it’s highly customizable.
 
+## Features
+
+- **Configurable Commands:** Easily modify, add, or remove search commands.
+- **Lightweight & Fast:** Optimized for speed with a minimalistic design and static hosting.
+- **Device-Aware Routing:** Automatically directs your queries based on your device (Windows, Android, iOS, etc.).
+- **Typo Detection:** Automatically detects and suggests corrections for misspelled commands.
+
 ## Setup Instructions
 
 1. **Fork the Repository:**  
