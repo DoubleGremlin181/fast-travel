@@ -152,6 +152,29 @@
         border-bottom: 1px solid #ccc;
         padding-bottom: 5px;
       }
+      /* Style section headers with custom arrow */
+      .section-details summary {
+        list-style: none;
+        position: relative;
+        padding-right: 30px;
+        cursor: pointer;
+      }
+      /* Hide default marker in WebKit browsers */
+      .section-details summary::-webkit-details-marker {
+        display: none;
+      }
+      /* Add custom arrow using a pseudo-element */
+      .section-details summary::after {
+        content: "▾";
+        position: absolute;
+        right: 10px;
+        top: -7px;
+        font-size: 1.5em;
+      }
+      /* Change arrow when the section is open */
+      .section-details[open] summary::after {
+        content: "▴";
+      }
       /* Error Display Styles */
       .error-container {
         text-align: center;
