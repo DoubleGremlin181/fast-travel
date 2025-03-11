@@ -386,37 +386,66 @@
 
       function generateCommandList() {
         let html = '<h2 class="commands-heading">Available Commands</h2>';
-        html += '<div class="command-list">';
-        Object.entries(config.commands).forEach(([cmd, data]) => {
-          // If the key is a section header, render it as a header
-          if (cmd.startsWith("__section_")) {
-            html += `<h3 class="section-header">${data}</h3>`;
+        let sections = [];
+        let currentSection = null;
+
+        // Iterate over the commands in the order they are defined in config
+        Object.entries(config.commands).forEach(([key, data]) => {
+          if (key.startsWith("__section_")) {
+            // When a section header is encountered, push the previous section (if any) and start a new one
+            if (currentSection) {
+              sections.push(currentSection);
+            }
+            currentSection = { title: data, commands: [] };
           } else {
-            const cmdId = "cmd-" + cmd;
-            html += `<div class="command-item">
-              <div class="command-title" onclick="toggleCommandDetails('${cmdId}')">
-                <span>${cmd}</span>
-                <span class="arrow">▾</span>
-              </div>
-              <div class="command-details" id="${cmdId}">`;
-            data.routes.forEach((route) => {
-              const patterns = route.customPatterns
-                ? route.customPatterns.map((p) => p.pattern).join(", ")
-                : "None";
-              const devices = Array.isArray(route.supportedDevices)
-                ? route.supportedDevices.join(", ")
-                : "All";
-              html += `<div class="route-details">
+            // If no section is set yet, create a default one
+            if (!currentSection) {
+              currentSection = { title: "Other Commands", commands: [] };
+            }
+            const cmdId = "cmd-" + key;
+            let commandHtml = `<div class="command-item">
+          <div class="command-title" onclick="toggleCommandDetails('${cmdId}')">
+            <span>${key}</span>
+            <span class="arrow">▾</span>
+          </div>
+          <div class="command-details" id="${cmdId}">
+            ${data.routes
+              .map(
+                (route) => `
+              <div class="route-details">
                 <p><strong>Default URL:</strong> ${route.defaultUrl}</p>
-                <p><strong>Devices:</strong> ${devices}</p>
-                <p><strong>Patterns:</strong> ${patterns}</p>
+                <p><strong>Devices:</strong> ${
+                  Array.isArray(route.supportedDevices)
+                    ? route.supportedDevices.join(", ")
+                    : "All"
+                }</p>
+                <p><strong>Patterns:</strong> ${
+                  route.customPatterns && route.customPatterns.length > 0
+                    ? route.customPatterns.map((p) => p.pattern).join(", ")
+                    : "None"
+                }</p>
                 <p><strong>Fallback URL:</strong> ${route.fallbackUrl}</p>
-              </div>`;
-            });
-            html += `</div></div>`;
+              </div>
+            `
+              )
+              .join("")}
+          </div>
+        </div>`;
+            currentSection.commands.push(commandHtml);
           }
         });
-        html += "</div>";
+        if (currentSection) {
+          sections.push(currentSection);
+        }
+
+        // Build the final HTML with collapsible sections using <details> and <summary>
+        sections.forEach((section) => {
+          html += `<details class="section-details">
+        <summary class="section-header">${section.title}</summary>
+        <div class="section-commands">${section.commands.join("")}</div>
+      </details>`;
+        });
+
         return html;
       }
 
