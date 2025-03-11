@@ -82,7 +82,27 @@
         }
       ]
     },
+    "scholar": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://scholar.google.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://scholar.google.com/scholar?q={args}"
+        }
+      ]
+    },
     "__section_3__": "Utilities",
+    "calc": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.desmos.com/scientific",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.desmos.com/scientific"
+        }
+      ]
+    },
     "cal": {
       "routes": [
         {
@@ -157,29 +177,6 @@
         }
       ]
     },
-    "gh": {
-      "routes": [
-        {
-          "supportedDevices": "*",
-          "defaultUrl": "https://github.com",
-          "customPatterns": [
-            {
-              "pattern": "u/{username}",
-              "targetUrl": "https://github.com/search?q={username}&type=users"
-            },
-            {
-              "pattern": "r/{repo}",
-              "targetUrl": "https://github.com/search?q={repo}&type=repositories"
-            },
-            {
-              "pattern": "{username}/{repo}",
-              "targetUrl": "https://github.com/{username}/{repo}"
-            }
-          ],
-          "fallbackUrl": "https://github.com/search?q={args}"
-        }
-      ]
-    },
     "apps": {
       "routes": [
         {
@@ -217,7 +214,7 @@
         }
       ]
     },
-    "__section_4__": "News Aggregators",
+    "__section_4__": "News",
     "hn": {
       "routes": [
         {
@@ -244,6 +241,26 @@
             }
           ],
           "fallbackUrl": "https://www.google.com/search?q=site:reddit.com+{args}"
+        }
+      ]
+    },
+    "news": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://news.google.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://news.google.com/search?q={args}"
+        }
+      ]
+    },
+    "nyt": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.nytimes.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.nytimes.com/search?query={args}"
         }
       ]
     },
@@ -294,6 +311,26 @@
         }
       ]
     },
+    "cr": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.crunchyroll.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.google.com/search?q=site:crunchyroll.com+{args}"
+        }
+      ]
+    },
+    "twitch": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.twitch.tv",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.twitch.tv/search?term={args}"
+        }
+      ]
+    },
     "__section_6__": "Social Media",
     "fb": {
       "routes": [
@@ -335,7 +372,7 @@
         }
       ]
     },
-    "__section_7__": "Miscellaneous",
+    "__section_7__": "Weather",
     "weather": {
       "routes": [
         {
@@ -353,6 +390,202 @@
           "defaultUrl": "https://fog.today/",
           "customPatterns": [],
           "fallbackUrl": "https://fog.today/"
+        }
+      ]
+    },
+    "__section_8__": "Developer & Cloud",
+    "st": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://fast.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://fast.com"
+        }
+      ]
+    },
+    "whois": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.whois.com/whois/",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.whois.com/whois/{args}"
+        }
+      ]
+    },
+    "time": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://time.is",
+          "customPatterns": [],
+          "fallbackUrl": "https://time.is"
+        }
+      ]
+    },
+    "ip": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.whatismyip.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.whatismyip.com"
+        }
+      ]
+    },
+    "aws": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://aws.amazon.com/console/",
+          "customPatterns": [],
+          "fallbackUrl": "https://aws.amazon.com/console/"
+        }
+      ]
+    },
+    "gcp": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://console.cloud.google.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://console.cloud.google.com"
+        }
+      ]
+    },
+    "py": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://docs.python.org/3",
+          "customPatterns": [],
+          "fallbackUrl": "https://docs.python.org/3/search.html?q={args}"
+        }
+      ]
+    },
+    "js": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+          "customPatterns": [],
+          "fallbackUrl": "https://developer.mozilla.org/en-US/search?q={args}"
+        }
+      ]
+    },
+    "man": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://man7.org/linux/man-pages/",
+          "customPatterns": [],
+          "fallbackUrl": "https://man7.org/linux/man-pages/?query={args}"
+        }
+      ]
+    },
+    "bash": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://explainshell.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://explainshell.com/explain?cmd={args}"
+        }
+      ]
+    },
+    "gh": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://github.com",
+          "customPatterns": [
+            {
+              "pattern": "u/{username}",
+              "targetUrl": "https://github.com/search?q={username}&type=users"
+            },
+            {
+              "pattern": "r/{repo}",
+              "targetUrl": "https://github.com/search?q={repo}&type=repositories"
+            },
+            {
+              "pattern": "{username}/{repo}",
+              "targetUrl": "https://github.com/{username}/{repo}"
+            }
+          ],
+          "fallbackUrl": "https://github.com/search?q={args}"
+        }
+      ]
+    },
+    "gist": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://gist.github.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://gist.github.com/search?q={args}"
+        }
+      ]
+    },
+    "paste": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://pastebin.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://pastebin.com/search?q={args}"
+        }
+      ]
+    },
+    "__section_9__": "Finance & Investing",
+    "fid": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.fidelity.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.google.com/search?q=site%3Afidelity.com+{args}"
+        }
+      ]
+    },
+    "stock": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://finance.yahoo.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://finance.yahoo.com/lookup?s={args}"
+        }
+      ]
+    },
+    "__section_10__": "Productivity Suite",
+    "docs": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://docs.google.com/document/u/0/",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.google.com/search?q=site:docs.google.com+{args}"
+        }
+      ]
+    },
+    "slides": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://docs.google.com/presentation/u/0/",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.google.com/search?q=site:docs.google.com+{args}"
+        }
+      ]
+    },
+    "sheets": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://docs.google.com/spreadsheets/u/0/",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.google.com/search?q=site:docs.google.com+{args}"
         }
       ]
     }
