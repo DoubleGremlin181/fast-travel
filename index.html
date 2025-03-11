@@ -144,6 +144,15 @@
       .route-details p {
         margin: 4px 0;
       }
+      /* Section header styles */
+      .section-header {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 5px;
+      }
       /* Error Display Styles */
       .error-container {
         text-align: center;
@@ -342,6 +351,8 @@
         let closest = null;
         let minDistance = Infinity;
         Object.keys(config.commands).forEach(function (cmd) {
+          // Skip section headers when finding closest command
+          if (cmd.startsWith("__")) return;
           const distance = levenshtein(input, cmd);
           if (distance < minDistance) {
             minDistance = distance;
@@ -378,28 +389,33 @@
         let html = '<h2 class="commands-heading">Available Commands</h2>';
         html += '<div class="command-list">';
         Object.entries(config.commands).forEach(([cmd, data]) => {
-          const cmdId = "cmd-" + cmd;
-          html += `<div class="command-item">
-            <div class="command-title" onclick="toggleCommandDetails('${cmdId}')">
-              <span>${cmd}</span>
-              <span class="arrow">▾</span>
-            </div>
-            <div class="command-details" id="${cmdId}">`;
-          data.routes.forEach((route) => {
-            const patterns = route.customPatterns
-              ? route.customPatterns.map((p) => p.pattern).join(", ")
-              : "None";
-            const devices = Array.isArray(route.supportedDevices)
-              ? route.supportedDevices.join(", ")
-              : "All";
-            html += `<div class="route-details">
-              <p><strong>Default URL:</strong> ${route.defaultUrl}</p>
-              <p><strong>Devices:</strong> ${devices}</p>
-              <p><strong>Patterns:</strong> ${patterns}</p>
-              <p><strong>Fallback URL:</strong> ${route.fallbackUrl}</p>
-            </div>`;
-          });
-          html += `</div></div>`;
+          // If the key is a section header, render it as a header
+          if (cmd.startsWith("__section_")) {
+            html += `<h3 class="section-header">${data}</h3>`;
+          } else {
+            const cmdId = "cmd-" + cmd;
+            html += `<div class="command-item">
+              <div class="command-title" onclick="toggleCommandDetails('${cmdId}')">
+                <span>${cmd}</span>
+                <span class="arrow">▾</span>
+              </div>
+              <div class="command-details" id="${cmdId}">`;
+            data.routes.forEach((route) => {
+              const patterns = route.customPatterns
+                ? route.customPatterns.map((p) => p.pattern).join(", ")
+                : "None";
+              const devices = Array.isArray(route.supportedDevices)
+                ? route.supportedDevices.join(", ")
+                : "All";
+              html += `<div class="route-details">
+                <p><strong>Default URL:</strong> ${route.defaultUrl}</p>
+                <p><strong>Devices:</strong> ${devices}</p>
+                <p><strong>Patterns:</strong> ${patterns}</p>
+                <p><strong>Fallback URL:</strong> ${route.fallbackUrl}</p>
+              </div>`;
+            });
+            html += `</div></div>`;
+          }
         });
         html += "</div>";
         return html;
@@ -436,7 +452,7 @@
 
         const command = rawCommand.toLowerCase();
 
-        if (!config.commands[command]) {
+        if (!config.commands[command] || command.startsWith("__")) {
           const mainContent = document.getElementById("mainContent");
           const suggested = findClosestCommand(command);
           let suggestionHTML = "";

@@ -1,5 +1,6 @@
 {
   "commands": {
+    "__section_1__": "Search Engines",
     "g": {
       "routes": [
         {
@@ -50,6 +51,7 @@
         }
       ]
     },
+    "__section_2__": "Reference",
     "dict": {
       "routes": [
         {
@@ -80,6 +82,7 @@
         }
       ]
     },
+    "__section_3__": "Utilities",
     "cal": {
       "routes": [
         {
@@ -214,6 +217,7 @@
         }
       ]
     },
+    "__section_4__": "News Aggregators",
     "hn": {
       "routes": [
         {
@@ -243,6 +247,7 @@
         }
       ]
     },
+    "__section_5__": "Media & Entertainment",
     "yt": {
       "routes": [
         {
@@ -289,6 +294,7 @@
         }
       ]
     },
+    "__section_6__": "Social Media",
     "fb": {
       "routes": [
         {
@@ -329,6 +335,7 @@
         }
       ]
     },
+    "__section_7__": "Miscellaneous",
     "weather": {
       "routes": [
         {
