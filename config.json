@@ -328,6 +328,26 @@
           "fallbackUrl": "https://chat.openai.com/?q={args}"
         }
       ]
+    },
+    "weather": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.google.com/search?q=weather",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.google.com/search?q=weather+{args}"
+        }
+      ]
+    },
+    "fog": {
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://fog.today/",
+          "customPatterns": [],
+          "fallbackUrl": "https://fog.today/"
+        }
+      ]
     }
   }
 }
