@@ -565,7 +565,7 @@
           "supportedDevices": "*",
           "defaultUrl": "https://docs.google.com/document/u/0/",
           "customPatterns": [],
-          "fallbackUrl": "https://www.google.com/search?q=site:docs.google.com+{args}"
+          "fallbackUrl": "https://docs.google.com/document/u/0/?q={args}"
         }
       ]
     },
@@ -575,7 +575,7 @@
           "supportedDevices": "*",
           "defaultUrl": "https://docs.google.com/presentation/u/0/",
           "customPatterns": [],
-          "fallbackUrl": "https://www.google.com/search?q=site:docs.google.com+{args}"
+          "fallbackUrl": "https://docs.google.com/presentation/u/0/?q={args}"
         }
       ]
     },
@@ -585,7 +585,7 @@
           "supportedDevices": "*",
           "defaultUrl": "https://docs.google.com/spreadsheets/u/0/",
           "customPatterns": [],
-          "fallbackUrl": "https://www.google.com/search?q=site:docs.google.com+{args}"
+          "fallbackUrl": "https://docs.google.com/spreadsheets/u/0/?q={args}"
         }
       ]
     }
