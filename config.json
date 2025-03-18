@@ -2,6 +2,7 @@
   "commands": {
     "__section_1__": "Search Engines",
     "g": {
+      "name": "Google",
       "routes": [
         {
           "supportedDevices": "*",
@@ -12,6 +13,7 @@
       ]
     },
     "ddg": {
+      "name": "DuckDuckGo",
       "routes": [
         {
           "supportedDevices": "*",
@@ -22,6 +24,7 @@
       ]
     },
     "bing": {
+      "name": "Bing",
       "routes": [
         {
           "supportedDevices": "*",
@@ -32,6 +35,7 @@
       ]
     },
     "gi": {
+      "name": "Google Images",
       "routes": [
         {
           "supportedDevices": "*",
@@ -42,6 +46,7 @@
       ]
     },
     "qq": {
+      "name": "ChatGPT",
       "routes": [
         {
           "supportedDevices": "*",
@@ -53,6 +58,7 @@
     },
     "__section_2__": "Reference",
     "dict": {
+      "name": "Dictionary.com",
       "routes": [
         {
           "supportedDevices": "*",
@@ -63,6 +69,7 @@
       ]
     },
     "wut": {
+      "name": "Urban Dictionary",
       "routes": [
         {
           "supportedDevices": "*",
@@ -73,6 +80,7 @@
       ]
     },
     "w": {
+      "name": "Wikipedia",
       "routes": [
         {
           "supportedDevices": "*",
@@ -83,6 +91,7 @@
       ]
     },
     "scholar": {
+      "name": "Google Scholar",
       "routes": [
         {
           "supportedDevices": "*",
@@ -94,6 +103,7 @@
     },
     "__section_3__": "Utilities",
     "calc": {
+      "name": "Desmos Scientific Calculator",
       "routes": [
         {
           "supportedDevices": "*",
@@ -104,6 +114,7 @@
       ]
     },
     "cal": {
+      "name": "Google Calendar",
       "routes": [
         {
           "supportedDevices": "*",
@@ -119,6 +130,7 @@
       ]
     },
     "maps": {
+      "name": "Google Maps",
       "routes": [
         {
           "supportedDevices": ["Android", "iOS"],
@@ -134,6 +146,7 @@
       ]
     },
     "gd": {
+      "name": "Google Drive",
       "routes": [
         {
           "supportedDevices": "*",
@@ -144,6 +157,7 @@
       ]
     },
     "file": {
+      "name": "File Browser",
       "routes": [
         {
           "supportedDevices": "*",
@@ -159,6 +173,7 @@
       ]
     },
     "mailto": {
+      "name": "Email",
       "routes": [
         {
           "supportedDevices": "*",
@@ -178,6 +193,7 @@
       ]
     },
     "apps": {
+      "name": "App Stores",
       "routes": [
         {
           "supportedDevices": ["Android"],
@@ -216,6 +232,7 @@
     },
     "__section_4__": "News",
     "hn": {
+      "name": "Hacker News",
       "routes": [
         {
           "supportedDevices": "*",
@@ -226,6 +243,7 @@
       ]
     },
     "r": {
+      "name": "Reddit",
       "routes": [
         {
           "supportedDevices": "*",
@@ -245,6 +263,7 @@
       ]
     },
     "news": {
+      "name": "Google News",
       "routes": [
         {
           "supportedDevices": "*",
@@ -255,6 +274,7 @@
       ]
     },
     "nyt": {
+      "name": "New York Times",
       "routes": [
         {
           "supportedDevices": "*",
@@ -266,6 +286,7 @@
     },
     "__section_5__": "Media & Entertainment",
     "yt": {
+      "name": "YouTube",
       "routes": [
         {
           "supportedDevices": "*",
@@ -285,6 +306,7 @@
       ]
     },
     "sp": {
+      "name": "Spotify",
       "routes": [
         {
           "supportedDevices": "*",
@@ -312,6 +334,7 @@
       ]
     },
     "cr": {
+      "name": "Crunchyroll",
       "routes": [
         {
           "supportedDevices": "*",
@@ -322,6 +345,7 @@
       ]
     },
     "twitch": {
+      "name": "Twitch",
       "routes": [
         {
           "supportedDevices": "*",
@@ -333,6 +357,7 @@
     },
     "__section_6__": "Social Media",
     "fb": {
+      "name": "Facebook",
       "routes": [
         {
           "supportedDevices": "*",
@@ -343,6 +368,7 @@
       ]
     },
     "wa": {
+      "name": "WhatsApp",
       "routes": [
         {
           "supportedDevices": "*",
@@ -353,6 +379,7 @@
       ]
     },
     "ig": {
+      "name": "Instagram",
       "routes": [
         {
           "supportedDevices": "*",
@@ -363,6 +390,7 @@
       ]
     },
     "discord": {
+      "name": "Discord",
       "routes": [
         {
           "supportedDevices": "*",
@@ -374,6 +402,7 @@
     },
     "__section_7__": "Weather",
     "weather": {
+      "name": "Weather",
       "routes": [
         {
           "supportedDevices": "*",
@@ -384,6 +413,7 @@
       ]
     },
     "fog": {
+      "name": "Fog",
       "routes": [
         {
           "supportedDevices": "*",
@@ -395,6 +425,7 @@
     },
     "__section_8__": "Developer & Cloud",
     "st": {
+      "name": "Speed Test",
       "routes": [
         {
           "supportedDevices": "*",
@@ -405,6 +436,7 @@
       ]
     },
     "whois": {
+      "name": "Whois",
       "routes": [
         {
           "supportedDevices": "*",
@@ -415,6 +447,7 @@
       ]
     },
     "time": {
+      "name": "Time",
       "routes": [
         {
           "supportedDevices": "*",
@@ -425,6 +458,7 @@
       ]
     },
     "ip": {
+      "name": "My IP",
       "routes": [
         {
           "supportedDevices": "*",
@@ -435,6 +469,7 @@
       ]
     },
     "aws": {
+      "name": "AWS Console",
       "routes": [
         {
           "supportedDevices": "*",
@@ -445,6 +480,7 @@
       ]
     },
     "gcp": {
+      "name": "Google Cloud Console",
       "routes": [
         {
           "supportedDevices": "*",
@@ -455,6 +491,7 @@
       ]
     },
     "py": {
+      "name": "Python Docs",
       "routes": [
         {
           "supportedDevices": "*",
@@ -465,6 +502,7 @@
       ]
     },
     "js": {
+      "name": "JavaScript MDN",
       "routes": [
         {
           "supportedDevices": "*",
@@ -475,6 +513,7 @@
       ]
     },
     "man": {
+      "name": "Linux Man Pages",
       "routes": [
         {
           "supportedDevices": "*",
@@ -485,6 +524,7 @@
       ]
     },
     "bash": {
+      "name": "Explain Shell",
       "routes": [
         {
           "supportedDevices": "*",
@@ -495,6 +535,7 @@
       ]
     },
     "gh": {
+      "name": "GitHub",
       "routes": [
         {
           "supportedDevices": "*",
@@ -518,6 +559,7 @@
       ]
     },
     "gist": {
+      "name": "GitHub Gist",
       "routes": [
         {
           "supportedDevices": "*",
@@ -528,6 +570,7 @@
       ]
     },
     "paste": {
+      "name": "Pastebin",
       "routes": [
         {
           "supportedDevices": "*",
@@ -539,6 +582,7 @@
     },
     "__section_9__": "Finance & Investing",
     "fid": {
+      "name": "Fidelity",
       "routes": [
         {
           "supportedDevices": "*",
@@ -549,6 +593,7 @@
       ]
     },
     "stocks": {
+      "name": "Yahoo Finance",
       "routes": [
         {
           "supportedDevices": "*",
@@ -560,6 +605,7 @@
     },
     "__section_10__": "Productivity Suite",
     "docs": {
+      "name": "Google Docs",
       "routes": [
         {
           "supportedDevices": "*",
@@ -570,6 +616,7 @@
       ]
     },
     "slides": {
+      "name": "Google Slides",
       "routes": [
         {
           "supportedDevices": "*",
@@ -580,6 +627,7 @@
       ]
     },
     "sheets": {
+      "name": "Google Sheets",
       "routes": [
         {
           "supportedDevices": "*",

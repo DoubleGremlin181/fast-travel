@@ -434,7 +434,7 @@
             const cmdId = "cmd-" + key;
             let commandHtml = `<div class="command-item">
           <div class="command-title" onclick="toggleCommandDetails('${cmdId}')">
-            <span>${key}</span>
+            <span>${key}${data.name ? " (" + data.name + ")" : ""}</span>
             <span class="arrow">▾</span>
           </div>
           <div class="command-details" id="${cmdId}">
