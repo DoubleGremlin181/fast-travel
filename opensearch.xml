@@ -5,6 +5,8 @@
     <Url type="text/html" template="https://fast-travel.kavishhukmani.me?q={searchTerms}" />
     <Url type="application/opensearchdescription+xml" rel="self"
         template="https://fast-travel.kavishhukmani.me/opensearch.xml" />
+    <Url type="application/x-suggestions+json"
+        template="https://suggestqueries.google.com/complete/search?client=chrome&q={searchTerms}" />
     <InputEncoding>UTF-8</InputEncoding>
     <Image height="16" width="16" type="image/x-icon">
         https://raw.githubusercontent.com/DoubleGremlin181/fast-travel/refs/heads/main/favicon.ico
