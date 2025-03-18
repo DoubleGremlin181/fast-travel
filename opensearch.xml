@@ -6,7 +6,7 @@
     <Url type="application/opensearchdescription+xml" rel="self"
         template="https://fast-travel.kavishhukmani.me/opensearch.xml" />
     <Url type="application/x-suggestions+json" rel="suggestions"
-        template="https://suggestqueries.google.com/complete/search?client=chrome&amp;q={searchTerms}" />
+        template="https://suggestqueries.google.com/complete/search?client=firefox&amp;q={searchTerms}" />
     <InputEncoding>UTF-8</InputEncoding>
     <Image height="16" width="16" type="image/x-icon">
         https://raw.githubusercontent.com/DoubleGremlin181/fast-travel/refs/heads/main/favicon.ico
