@@ -495,6 +495,50 @@
       function processQuery() {
         const query = parseQuery();
         const deviceType = getDeviceType();
+
+        // Check for prefix type commands first.
+        for (const cmdKey in config.commands) {
+          const commandObj = config.commands[cmdKey];
+          if (commandObj.type && commandObj.type.toLowerCase() === "prefix") {
+            if (query.toLowerCase().startsWith(cmdKey.toLowerCase())) {
+              loggerHelper("Debug: Found matching prefix command:", cmdKey);
+              // Split the query to allow extra arguments after the first token.
+              let [firstToken, ...rest] = query.split(" ");
+              // Remove the prefix from the first token to get the term.
+              let term = firstToken.substring(cmdKey.length);
+              let args = rest.join(" ");
+              loggerHelper("Debug: Term:", term);
+              loggerHelper("Debug: Arguments:", args);
+              // Find the route for the current device.
+              const matchingRoute = findMatchingRoute(commandObj, deviceType);
+              loggerHelper(
+                "Debug: Matching route for prefix command:",
+                matchingRoute
+              );
+              let defaultUrl = "";
+              // If there are no extra arguments, use the route's defaultUrl.
+              // Otherwise, use the fallbackUrl (which might combine the term with extra args).
+              if (args.trim() === "") {
+                defaultUrl = matchingRoute.defaultUrl.replace(
+                  "{term}",
+                  encodeURIComponent(term)
+                );
+              } else {
+                defaultUrl = matchingRoute.fallbackUrl
+                  .replace("{term}", encodeURIComponent(term))
+                  .replace("{args}", encodeURIComponent(args));
+              }
+              loggerHelper(
+                "Debug: Generated URL for prefix command:",
+                defaultUrl
+              );
+              redirectHelper(defaultUrl);
+              return;
+            }
+          }
+        }
+
+        // Regular command processing below.
         let [rawCommand, ...args] = query ? query.split(" ") : [];
 
         loggerHelper("Debug: Device Type:", deviceType);

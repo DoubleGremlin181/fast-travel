@@ -3,6 +3,7 @@
     "__section_1__": "Search Engines",
     "g": {
       "name": "Google",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -14,6 +15,7 @@
     },
     "ddg": {
       "name": "DuckDuckGo",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -25,6 +27,7 @@
     },
     "bing": {
       "name": "Bing",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -36,6 +39,7 @@
     },
     "gi": {
       "name": "Google Images",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -47,6 +51,7 @@
     },
     "qq": {
       "name": "ChatGPT",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -59,6 +64,7 @@
     "__section_2__": "Reference",
     "dict": {
       "name": "Dictionary.com",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -70,6 +76,7 @@
     },
     "wut": {
       "name": "Urban Dictionary",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -81,6 +88,7 @@
     },
     "w": {
       "name": "Wikipedia",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -92,6 +100,7 @@
     },
     "scholar": {
       "name": "Google Scholar",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -104,6 +113,7 @@
     "__section_3__": "Utilities",
     "calc": {
       "name": "Desmos Scientific Calculator",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -115,6 +125,7 @@
     },
     "cal": {
       "name": "Google Calendar",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -131,6 +142,7 @@
     },
     "maps": {
       "name": "Google Maps",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": ["Android", "iOS"],
@@ -147,6 +159,7 @@
     },
     "gd": {
       "name": "Google Drive",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -158,6 +171,7 @@
     },
     "file": {
       "name": "File Browser",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -174,6 +188,7 @@
     },
     "mailto": {
       "name": "Email",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -194,6 +209,7 @@
     },
     "apps": {
       "name": "App Stores",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": ["Android"],
@@ -233,6 +249,7 @@
     "__section_4__": "News",
     "hn": {
       "name": "Hacker News",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -244,6 +261,7 @@
     },
     "r": {
       "name": "Reddit",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -262,8 +280,20 @@
         }
       ]
     },
+    "r/": {
+      "name": "Reddit - Prefix",
+      "type": "prefix",
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.reddit.com/r/{term}",
+          "fallbackUrl": "https://www.google.com/search?q=site%3Areddit.com%2Fr%2F{term}+{args}"
+        }
+      ]
+    },
     "news": {
       "name": "Google News",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -275,6 +305,7 @@
     },
     "nyt": {
       "name": "New York Times",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -287,6 +318,7 @@
     "__section_5__": "Media & Entertainment",
     "yt": {
       "name": "YouTube",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -307,6 +339,7 @@
     },
     "sp": {
       "name": "Spotify",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -335,6 +368,7 @@
     },
     "cr": {
       "name": "Crunchyroll",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -346,6 +380,7 @@
     },
     "twitch": {
       "name": "Twitch",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -358,6 +393,7 @@
     "__section_6__": "Social Media",
     "fb": {
       "name": "Facebook",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -369,6 +405,7 @@
     },
     "wa": {
       "name": "WhatsApp",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -380,6 +417,7 @@
     },
     "ig": {
       "name": "Instagram",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -391,6 +429,7 @@
     },
     "discord": {
       "name": "Discord",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -403,6 +442,7 @@
     "__section_7__": "Weather",
     "weather": {
       "name": "Weather",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -414,6 +454,7 @@
     },
     "fog": {
       "name": "Fog",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -426,6 +467,7 @@
     "__section_8__": "Developer & Cloud",
     "st": {
       "name": "Speed Test",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -437,6 +479,7 @@
     },
     "whois": {
       "name": "Whois",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -448,6 +491,7 @@
     },
     "time": {
       "name": "Time",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -459,6 +503,7 @@
     },
     "ip": {
       "name": "My IP",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -470,6 +515,7 @@
     },
     "aws": {
       "name": "AWS Console",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -481,6 +527,7 @@
     },
     "gcp": {
       "name": "Google Cloud Console",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -492,6 +539,7 @@
     },
     "py": {
       "name": "Python Docs",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -503,6 +551,7 @@
     },
     "js": {
       "name": "JavaScript MDN",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -514,6 +563,7 @@
     },
     "man": {
       "name": "Linux Man Pages",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -525,6 +575,7 @@
     },
     "bash": {
       "name": "Explain Shell",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -536,6 +587,7 @@
     },
     "gh": {
       "name": "GitHub",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -560,6 +612,7 @@
     },
     "gist": {
       "name": "GitHub Gist",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -571,6 +624,7 @@
     },
     "paste": {
       "name": "Pastebin",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -583,6 +637,7 @@
     "__section_9__": "Finance & Investing",
     "fid": {
       "name": "Fidelity",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -594,6 +649,7 @@
     },
     "stocks": {
       "name": "Yahoo Finance",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -603,9 +659,21 @@
         }
       ]
     },
+    "$": {
+      "name": "Stock Quote - Prefix",
+      "type": "prefix",
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://finance.yahoo.com/quote/{term}",
+          "fallbackUrl": "https://finance.yahoo.com/quote/{term}"
+        }
+      ]
+    },
     "__section_10__": "Productivity Suite",
     "docs": {
       "name": "Google Docs",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -617,6 +685,7 @@
     },
     "slides": {
       "name": "Google Slides",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
@@ -628,6 +697,7 @@
     },
     "sheets": {
       "name": "Google Sheets",
+      "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
