@@ -311,6 +311,12 @@
       const isDebug =
         new URLSearchParams(window.location.search).get("debug") === "true";
 
+      function loggerHelper(...args) {
+        if (isDebug) {
+          console.log(...args);
+        }
+      }
+
       function getDeviceType() {
         const ua = navigator.userAgent;
         if (/Windows NT/i.test(ua)) return "Windows";
@@ -478,8 +484,8 @@
       }
 
       function redirectHelper(url) {
+        loggerHelper("Debug: Delaying redirect to", url);
         if (isDebug) {
-          console.log("Debug: Delaying redirect to", url);
           setTimeout(() => (window.location.href = url), 3000);
         } else {
           window.location.href = url;
@@ -491,11 +497,9 @@
         const deviceType = getDeviceType();
         let [rawCommand, ...args] = query ? query.split(" ") : [];
 
-        if (isDebug) {
-          console.log("Debug: Device Type:", deviceType);
-          console.log("Debug: Command:", rawCommand || "None");
-          console.log("Debug: Arguments:", args);
-        }
+        loggerHelper("Debug: Device Type:", deviceType);
+        loggerHelper("Debug: Command:", rawCommand || "None");
+        loggerHelper("Debug: Arguments:", args);
 
         if (!query) {
           showAvailableCommands();
@@ -509,12 +513,10 @@
           const suggested = findClosestCommand(command);
           // If a typo suggestion is found, display the error message with options.
           if (suggested) {
-            if (isDebug) {
-              console.log(
-                "Debug: No exact command match. Suggested:",
-                suggested
-              );
-            }
+            loggerHelper(
+              "Debug: No exact command match. Suggested:",
+              suggested
+            );
             const mainContent = document.getElementById("mainContent");
             mainContent.innerHTML = `
               <div class="error-container">
@@ -579,13 +581,10 @@
             });
             return;
           } else {
-            // If no close match (no typo) is found, automatically redirect to Google search.
-            if (isDebug) {
-              console.log(
-                "Debug: No exact command match. No suggestion found.",
-                suggested
-              );
-            }
+            loggerHelper(
+              "Debug: No exact command match. No suggestion found.",
+              suggested
+            );
             const googleCmd = config.commands["g"];
             const url = googleCmd.routes[0].fallbackUrl.replace(
               "{args}",
@@ -599,10 +598,7 @@
         // A valid command is found.
         const commandConfig = config.commands[command];
         const matchingRoute = findMatchingRoute(commandConfig, deviceType);
-
-        if (isDebug) {
-          console.log("Debug: Matching route for command:", matchingRoute);
-        }
+        loggerHelper("Debug: Matching route for command:", matchingRoute);
 
         // If no route is valid for this device, fallback to Google search.
         if (!matchingRoute) {
@@ -611,9 +607,6 @@
             "{args}",
             encodeURIComponent(query)
           );
-          if (isDebug) {
-            console.log("Debug: No matching route. Falling back to Google");
-          }
           redirectHelper(url);
           return;
         }
@@ -621,9 +614,7 @@
         let targetUrl = matchingRoute.defaultUrl;
         if (args.length) {
           const joinedArgs = args.join(" ");
-          if (isDebug) {
-            console.log("Debug: Joined arguments:", joinedArgs);
-          }
+          loggerHelper("Debug: Joined arguments:", joinedArgs);
           for (const {
             pattern,
             targetUrl: targetPatternUrl,
@@ -638,12 +629,10 @@
                 /{(\w+)}/g,
                 (_, key) => match.groups[key] || ""
               );
-              if (isDebug) {
-                console.log(
-                  `Debug: Matched pattern "${pattern}". Generated URL:`,
-                  targetUrl
-                );
-              }
+              loggerHelper(
+                `Debug: Matched pattern "${pattern}". Generated URL:`,
+                targetUrl
+              );
               break;
             }
           }
@@ -671,9 +660,7 @@
         try {
           const response = await fetch("config.json");
           window.config = await response.json();
-          if (isDebug) {
-            console.log("Debug: Config loaded successfully", window.config);
-          }
+          loggerHelper("Debug: Config loaded successfully", window.config);
           processQuery();
         } catch (error) {
           console.error("Error loading config:", error);
