@@ -583,12 +583,18 @@
           }
         }
 
+        // A valid command is found.
         const commandConfig = config.commands[command];
         const matchingRoute = findMatchingRoute(commandConfig, deviceType);
+
+        // If no route is valid for this device, fallback to Google search.
         if (!matchingRoute) {
-          document.getElementById("mainContent").innerHTML = `
-            <p style="text-align: center;">Unsupported Device: No suitable route found for your device.</p>
-            ${generateCommandList()}`;
+          const googleCmd = config.commands["g"];
+          const url = googleCmd.routes[0].fallbackUrl.replace(
+            "{args}",
+            encodeURIComponent(query)
+          );
+          redirectHelper(url);
           return;
         }
 
