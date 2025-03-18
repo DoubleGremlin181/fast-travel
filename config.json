@@ -548,7 +548,7 @@
         }
       ]
     },
-    "stock": {
+    "stocks": {
       "routes": [
         {
           "supportedDevices": "*",
