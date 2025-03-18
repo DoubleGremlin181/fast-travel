@@ -503,44 +503,38 @@
 
         const command = rawCommand.toLowerCase();
 
+        // If no valid command is found (or command is reserved), use typo logic.
         if (!config.commands[command] || command.startsWith("__")) {
-          const mainContent = document.getElementById("mainContent");
           const suggested = findClosestCommand(command);
-          let suggestionHTML = "";
+          // If a typo suggestion is found, display the error message with options.
           if (suggested) {
-            suggestionHTML = `<span class="error-suggestion"> Did you mean "<strong>${suggested}</strong>"?</span>`;
-          }
-          mainContent.innerHTML = `
-            <div class="error-container">
-              <p class="error-message">Command "<strong>${rawCommand}</strong>" not recognized.${suggestionHTML}</p>
-              <div class="button-container">
-                ${
-                  suggested
-                    ? `<button id="suggestedButton" class="error-btn">
-                  Use suggestion: ${suggested} <span class="shortcut-hint">(y)</span>
-                </button>`
-                    : ""
-                }
-                <button id="googleButton" class="error-btn">
-                  Search on Google <span class="shortcut-hint">(g)</span>
-                </button>
+            const mainContent = document.getElementById("mainContent");
+            mainContent.innerHTML = `
+              <div class="error-container">
+                <p class="error-message">Command "<strong>${rawCommand}</strong>" not recognized. Did you mean "<strong>${suggested}</strong>"?</p>
+                <div class="button-container">
+                  <button id="suggestedButton" class="error-btn">
+                    Use suggestion: ${suggested} <span class="shortcut-hint">(y)</span>
+                  </button>
+                  <button id="googleButton" class="error-btn">
+                    Search on Google <span class="shortcut-hint">(g)</span>
+                  </button>
+                </div>
               </div>
-            </div>
-            ${generateCommandList()}
-          `;
+              ${generateCommandList()}
+            `;
 
-          document
-            .getElementById("googleButton")
-            .addEventListener("click", () => {
-              const googleCmd = config.commands["g"];
-              const url = googleCmd.routes[0].fallbackUrl.replace(
-                "{args}",
-                encodeURIComponent(query)
-              );
-              redirectHelper(url);
-            });
+            document
+              .getElementById("googleButton")
+              .addEventListener("click", () => {
+                const googleCmd = config.commands["g"];
+                const url = googleCmd.routes[0].fallbackUrl.replace(
+                  "{args}",
+                  encodeURIComponent(query)
+                );
+                redirectHelper(url);
+              });
 
-          if (suggested) {
             document
               .getElementById("suggestedButton")
               .addEventListener("click", () => {
@@ -553,31 +547,40 @@
                   (isDebug ? "&debug=true" : "");
                 redirectHelper(redirectUrl);
               });
-          }
 
-          document.addEventListener("keydown", function handler(event) {
-            if (event.key.toLowerCase() === "g") {
-              const googleCmd = config.commands["g"];
-              const url = googleCmd.routes[0].fallbackUrl.replace(
-                "{args}",
-                encodeURIComponent(query)
-              );
-              document.removeEventListener("keydown", handler);
-              redirectHelper(url);
-            }
-            if (suggested && event.key.toLowerCase() === "y") {
-              const newQuery =
-                suggested + (args.length ? " " + args.join(" ") : "");
-              const redirectUrl =
-                window.location.origin +
-                "?q=" +
-                encodeURIComponent(newQuery) +
-                (isDebug ? "&debug=true" : "");
-              document.removeEventListener("keydown", handler);
-              redirectHelper(redirectUrl);
-            }
-          });
-          return;
+            document.addEventListener("keydown", function handler(event) {
+              if (event.key.toLowerCase() === "g") {
+                const googleCmd = config.commands["g"];
+                const url = googleCmd.routes[0].fallbackUrl.replace(
+                  "{args}",
+                  encodeURIComponent(query)
+                );
+                document.removeEventListener("keydown", handler);
+                redirectHelper(url);
+              }
+              if (event.key.toLowerCase() === "y") {
+                const newQuery =
+                  suggested + (args.length ? " " + args.join(" ") : "");
+                const redirectUrl =
+                  window.location.origin +
+                  "?q=" +
+                  encodeURIComponent(newQuery) +
+                  (isDebug ? "&debug=true" : "");
+                document.removeEventListener("keydown", handler);
+                redirectHelper(redirectUrl);
+              }
+            });
+            return;
+          } else {
+            // If no close match (no typo) is found, automatically redirect to Google search.
+            const googleCmd = config.commands["g"];
+            const url = googleCmd.routes[0].fallbackUrl.replace(
+              "{args}",
+              encodeURIComponent(query)
+            );
+            redirectHelper(url);
+            return;
+          }
         }
 
         const commandConfig = config.commands[command];
