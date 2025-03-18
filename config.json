@@ -49,6 +49,18 @@
         }
       ]
     },
+    "og": {
+      "name": "Google (Pre AI)",
+      "type": "default",
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.google.com",
+          "customPatterns": [],
+          "fallbackUrl": "https://www.google.com/search?q={args}&udm=14&tbs=cdr:1,cd_min:1/1/1900,cd_max:12/31/2022"
+        }
+      ]
+    },
     "qq": {
       "name": "ChatGPT",
       "type": "default",
