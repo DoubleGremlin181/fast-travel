@@ -381,8 +381,8 @@
             closest = cmd;
           }
         });
-        // For short commands (<=3 characters) use a threshold of 1, otherwise 2.
-        const threshold = input.length <= 3 ? 1 : 2;
+        // For short commands (<=5 characters) use a threshold of 1, otherwise 2.
+        const threshold = input.length <= 5 ? 1 : 2;
         return minDistance <= threshold ? closest : null;
       }
 
