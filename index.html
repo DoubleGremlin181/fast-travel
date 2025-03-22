@@ -367,6 +367,7 @@
           errors.push("Missing 'commands' property in config.");
           return errors;
         }
+
         for (const key in config.commands) {
           // Skip section headers
           if (key.startsWith("__")) continue;
@@ -469,6 +470,32 @@
                   ) {
                     errors.push(
                       `Command '${key}', route index ${idx}, customPatterns index ${pIdx} is missing a valid 'targetUrl'.`
+                    );
+                  }
+                  const extractPlaceholders = (str) => {
+                    const matches = str.match(/{(\w+)}/g);
+                    return matches
+                      ? matches.map((s) => s.slice(1, -1)).sort()
+                      : [];
+                  };
+                  const patternPlaceholders = extractPlaceholders(
+                    patternObj.pattern
+                  );
+                  const targetPlaceholders = extractPlaceholders(
+                    patternObj.targetUrl
+                  );
+                  if (
+                    patternPlaceholders.length !== targetPlaceholders.length ||
+                    !patternPlaceholders.every(
+                      (value, index) => value === targetPlaceholders[index]
+                    )
+                  ) {
+                    errors.push(
+                      `Command '${key}', route index ${idx}, customPatterns index ${pIdx}: placeholders in 'pattern' (${patternPlaceholders.join(
+                        ", "
+                      )}) do not match those in 'targetUrl' (${targetPlaceholders.join(
+                        ", "
+                      )}).`
                     );
                   }
                 });
