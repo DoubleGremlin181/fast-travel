@@ -390,14 +390,23 @@
         }
       ]
     },
-    "twitch": {
-      "name": "Twitch",
+    "ttv": {
+      "name": "Twitch TV",
       "type": "default",
       "routes": [
         {
           "supportedDevices": "*",
           "defaultUrl": "https://www.twitch.tv",
-          "customPatterns": [],
+          "customPatterns": [
+            {
+              "pattern": "u/{username}",
+              "targetUrl": "https://www.twitch.tv/{username}"
+            },
+            {
+              "pattern": "c/{category}",
+              "targetUrl": "https://www.twitch.tv/directory/category/{category}"
+            }
+          ],
           "fallbackUrl": "https://www.twitch.tv/search?term={args}"
         }
       ]
