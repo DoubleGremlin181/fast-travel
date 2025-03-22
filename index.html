@@ -213,6 +213,19 @@
       .error-btn:hover {
         background-color: #357ae8;
       }
+      /* Footer Styles */
+      footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.9em;
+      }
+      footer a {
+        text-decoration: none;
+        color: #007bff;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
       /* Responsive Adjustments */
       @media (min-width: 768px) {
         .container {
@@ -284,6 +297,9 @@
         .error-btn:hover {
           background-color: #357ae8;
         }
+        footer a {
+          color: #66aaff;
+        }
       }
     </style>
   </head>
@@ -306,6 +322,14 @@
       <main id="mainContent">
         <p style="text-align: center; font-size: 2em">Processing...</p>
       </main>
+      <footer>
+        <a
+          href="https://github.com/DoubleGremlin181/fast-travel"
+          target="_blank"
+        >
+          View Source on GitHub
+        </a>
+      </footer>
     </div>
     <script>
       const isDebug =
