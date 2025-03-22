@@ -327,6 +327,146 @@
         return "Unknown";
       }
 
+      // Config linter: checks for common issues in the config object.
+      function lintConfig(config) {
+        const errors = [];
+        const allowedDevices = [
+          "Windows",
+          "MacOS",
+          "Android",
+          "Linux",
+          "iOS",
+          "Unknown",
+        ];
+
+        if (!config.commands) {
+          errors.push("Missing 'commands' property in config.");
+          return errors;
+        }
+        for (const key in config.commands) {
+          // Skip section headers
+          if (key.startsWith("__")) continue;
+          const cmd = config.commands[key];
+          if (typeof cmd !== "object") {
+            errors.push(`Command '${key}' is not an object.`);
+            continue;
+          }
+          if (
+            !cmd.name ||
+            typeof cmd.name !== "string" ||
+            cmd.name.trim() === ""
+          ) {
+            errors.push(`Command '${key}' is missing a valid 'name' property.`);
+          }
+          if (
+            !cmd.type ||
+            (cmd.type.toLowerCase() !== "default" &&
+              cmd.type.toLowerCase() !== "prefix")
+          ) {
+            errors.push(
+              `Command '${key}' has an invalid or missing 'type' property.`
+            );
+          }
+          if (
+            !cmd.routes ||
+            !Array.isArray(cmd.routes) ||
+            cmd.routes.length === 0
+          ) {
+            errors.push(`Command '${key}' must have at least one route.`);
+            continue;
+          }
+
+          // Build a union of supported devices across all routes for this command.
+          let unionDevices = new Set();
+          cmd.routes.forEach((route, idx) => {
+            if (!route.supportedDevices) {
+              errors.push(
+                `Command '${key}', route index ${idx} is missing 'supportedDevices'.`
+              );
+            } else if (route.supportedDevices === "*") {
+              // If any route uses "*", it supports all devices.
+              unionDevices = new Set(allowedDevices);
+            } else if (Array.isArray(route.supportedDevices)) {
+              route.supportedDevices.forEach((device) => {
+                if (!allowedDevices.includes(device)) {
+                  errors.push(
+                    `Command '${key}', route index ${idx} has invalid device '${device}' in supportedDevices. Allowed devices: ${allowedDevices.join(
+                      ", "
+                    )}.`
+                  );
+                } else {
+                  unionDevices.add(device);
+                }
+              });
+            } else {
+              errors.push(
+                `Command '${key}', route index ${idx}: 'supportedDevices' should be "*" or an array of allowed devices.`
+              );
+            }
+
+            if (
+              !route.defaultUrl ||
+              typeof route.defaultUrl !== "string" ||
+              route.defaultUrl.trim() === ""
+            ) {
+              errors.push(
+                `Command '${key}', route index ${idx} is missing a valid 'defaultUrl'.`
+              );
+            }
+            if (
+              !route.fallbackUrl ||
+              typeof route.fallbackUrl !== "string" ||
+              route.fallbackUrl.trim() === ""
+            ) {
+              errors.push(
+                `Command '${key}', route index ${idx} is missing a valid 'fallbackUrl'.`
+              );
+            }
+            if ("customPatterns" in route) {
+              if (!Array.isArray(route.customPatterns)) {
+                errors.push(
+                  `Command '${key}', route index ${idx}: 'customPatterns' should be an array.`
+                );
+              } else {
+                route.customPatterns.forEach((patternObj, pIdx) => {
+                  if (
+                    !patternObj.pattern ||
+                    typeof patternObj.pattern !== "string" ||
+                    patternObj.pattern.trim() === ""
+                  ) {
+                    errors.push(
+                      `Command '${key}', route index ${idx}, customPatterns index ${pIdx} is missing a valid 'pattern'.`
+                    );
+                  }
+                  if (
+                    !patternObj.targetUrl ||
+                    typeof patternObj.targetUrl !== "string" ||
+                    patternObj.targetUrl.trim() === ""
+                  ) {
+                    errors.push(
+                      `Command '${key}', route index ${idx}, customPatterns index ${pIdx} is missing a valid 'targetUrl'.`
+                    );
+                  }
+                });
+              }
+            }
+          });
+
+          // After processing all routes for this command, check if the union covers all allowed devices.
+          const missingDevices = allowedDevices.filter(
+            (device) => !unionDevices.has(device)
+          );
+          if (missingDevices.length > 0) {
+            errors.push(
+              `Command '${key}' does not support all devices. Missing: ${missingDevices.join(
+                ", "
+              )}.`
+            );
+          }
+        }
+        return errors;
+      }
+
       function parseQuery() {
         return (
           new URLSearchParams(window.location.search).get("q")?.trim() || ""
@@ -705,6 +845,15 @@
           const response = await fetch("config.json");
           window.config = await response.json();
           loggerHelper("Debug: Config loaded successfully", window.config);
+          // Run the config linter if debug is enabled
+          if (isDebug) {
+            const lintErrors = lintConfig(window.config);
+            if (lintErrors.length > 0) {
+              loggerHelper("Config Linter Errors:", lintErrors);
+            } else {
+              loggerHelper("Config Linter: No issues found.");
+            }
+          }
           processQuery();
         } catch (error) {
           console.error("Error loading config:", error);
