@@ -2,9 +2,9 @@
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
     <ShortName>Fast Travel</ShortName>
     <Description>Supercharge your search bar</Description>
-    <Url type="text/html" template="https://fast-travel.kavishhukmani.me?q={searchTerms}" />
+    <Url type="text/html" template="https://fast-travel.kavi.sh?q={searchTerms}" />
     <Url type="application/opensearchdescription+xml" rel="self"
-        template="https://fast-travel.kavishhukmani.me/opensearch.xml" />
+        template="https://fast-travel.kavi.sh/opensearch.xml" />
     <Url type="application/x-suggestions+json" rel="suggestions"
         template="https://suggestqueries.google.com/complete/search?client=firefox&amp;q={searchTerms}" />
     <InputEncoding>UTF-8</InputEncoding>
