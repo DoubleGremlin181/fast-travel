@@ -258,6 +258,18 @@
         }
       ]
     },
+    "ub": {
+      "name": "Unblock via archive.today",
+      "type": "default",
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://archive.today",
+          "customPatterns": [],
+          "fallbackUrl": "https://archive.today/submit/?url={args}"
+        }
+      ]
+    },
     "__section_4__": "News",
     "hn": {
       "name": "Hacker News",
