@@ -270,6 +270,27 @@
         }
       ]
     },
+    "fa": {
+      "name": "FlightAware",
+      "type": "default",
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://www.flightaware.com/",
+          "customPatterns": [
+            {
+              "pattern": "f/{flight_number}",
+              "targetUrl": "https://flightaware.com/live/flight/{flight_number}"
+            },
+            {
+              "pattern": "a/{airport_code}",
+              "targetUrl": "https://flightaware.com/live/airport/{airport_code}"
+            }
+          ],
+          "fallbackUrl": "https://flightaware.com/live/flight/{args}"
+        }
+      ]
+    },
     "__section_4__": "News",
     "hn": {
       "name": "Hacker News",
@@ -664,6 +685,18 @@
           "defaultUrl": "https://pastebin.com",
           "customPatterns": [],
           "fallbackUrl": "https://pastebin.com/search?q={args}"
+        }
+      ]
+    },
+    "me": {
+      "name": "Creators Blog",
+      "type": "default",
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://kavi.sh",
+          "customPatterns": [],
+          "fallbackUrl": "https://kavi.sh"
         }
       ]
     },
