@@ -433,47 +433,6 @@ footer a:hover {
   }
 }
 
-/* Extra small devices */
-@media (max-width: 360px) {
-  .container {
-    padding: 12px;
-  }
-
-  .header-title {
-    font-size: 1.4em;
-  }
-
-  .header-tagline {
-    font-size: 0.9em;
-  }
-
-  .search-bar input,
-  .search-bar button {
-    padding: 12px 14px;
-    font-size: 15px;
-  }
-
-  .command-title {
-    padding: 10px 12px;
-    font-size: 0.9em;
-  }
-
-  .command-details {
-    padding: 10px 12px;
-    font-size: 0.85em;
-  }
-
-  .error-container {
-    padding: 12px;
-  }
-
-  .error-btn {
-    padding: 10px 14px;
-    font-size: 0.9em;
-    min-height: 40px;
-  }
-}
-
 /* Dark Mode Styles */
 @media (prefers-color-scheme: dark) {
   body {
