@@ -10,6 +10,7 @@ body {
   align-items: column;
   justify-content: center;
   min-height: 100vh;
+  line-height: 1.5;
 }
 .container {
   width: 100%;
@@ -251,63 +252,225 @@ footer a:hover {
     min-width: 400px;
   }
 }
+
+/* Enhanced Mobile Styles */
 @media (max-width: 480px) {
-  .container {
-    padding: 15px;
+  body {
+    line-height: 1.6;
   }
-  .header-title {
-    font-size: 1.5em;
+
+  .container {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  /* Header improvements */
+  header {
+    margin-bottom: 20px;
     text-align: center;
   }
+
+  .header-title {
+    font-size: 1.8em;
+    text-align: center;
+    margin-bottom: -4px;
+    font-weight: 600;
+  }
+
   .header-tagline {
     text-align: center;
-    font-size: 0.9em;
+    font-size: 0.95em;
+    margin-bottom: 16px;
+    line-height: 1.4;
   }
+
+  /* Search bar improvements */
   .search-bar {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    gap: 12px;
   }
+
   .search-bar input {
     min-width: unset;
-    width: 100%;
-    margin-bottom: 10px;
-    border-radius: 4px;
+    padding: 14px 16px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    margin-bottom: 0;
   }
+
+  .search-bar input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  }
+
   .search-bar button {
     width: 100%;
-    border-radius: 4px;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    background-color: #007bff;
+    min-height: 48px;
   }
-  .error-btn {
-    min-width: 120px;
-    font-size: 0.85em;
-    padding: 8px 12px;
+
+  .google-btn {
+    margin-top: 12px;
+    padding: 10px 16px;
+    font-size: 0.95em;
+    font-weight: 500;
+    border-radius: 6px;
   }
+
+  /* Commands section improvements */
+  .commands-heading {
+    font-size: 1.4em;
+    text-align: center;
+    margin-bottom: 16px;
+    margin-top: 32px;
+    font-weight: 600;
+  }
+
+  .command-list {
+    margin-top: 16px;
+  }
+
+  .command-item {
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .command-title {
+    padding: 12px 16px;
+    font-size: 0.95em;
+    font-weight: 600;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .command-details {
+    padding: 12px 16px;
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
+
+  .route-details {
+    margin-bottom: 12px;
+  }
+
+  .route-details p {
+    margin: 6px 0;
+  }
+
+  /* Section header improvements */
+  .section-header {
+    font-size: 1.2em;
+    padding-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .section-details summary {
+    font-size: 1.2em;
+    font-weight: 600;
+  }
+
+  /* Error container improvements */
+  .error-container {
+    margin-bottom: 24px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .error-message {
+    font-size: 1.05em;
+    margin-bottom: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .error-suggestion {
+    font-size: 0.95em;
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
   .button-container {
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
+    align-items: stretch;
   }
+
   .error-btn {
     width: 100%;
     flex: none;
+    min-width: unset;
+    font-size: 0.95em;
+    font-weight: 600;
+    padding: 12px 16px;
+    min-height: 44px;
+    border-radius: 6px;
   }
-  .commands-heading {
-    font-size: 1.2em;
-    text-align: center;
+
+  /* Footer improvements */
+  footer {
+    margin-top: 32px;
+    padding: 16px 0;
+    font-size: 0.85em;
+    flex-direction: column;
+    gap: 8px;
   }
-  .command-title {
-    padding: 8px;
+
+  /* Spinner improvements */
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border-width: 3px;
+    margin: 0 auto 16px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+  .container {
+    padding: 12px;
+  }
+
+  .header-title {
+    font-size: 1.4em;
+  }
+
+  .header-tagline {
     font-size: 0.9em;
   }
+
+  .search-bar input,
+  .search-bar button {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .command-title {
+    padding: 10px 12px;
+    font-size: 0.9em;
+  }
+
   .command-details {
-    padding: 8px;
+    padding: 10px 12px;
     font-size: 0.85em;
   }
-  .section-header {
-    font-size: 1.1em;
+
+  .error-container {
+    padding: 12px;
   }
-  .spinner {
-    width: 35px;
-    height: 35px;
+
+  .error-btn {
+    padding: 10px 14px;
+    font-size: 0.9em;
+    min-height: 40px;
   }
 }
 
@@ -363,5 +526,27 @@ footer a:hover {
   .spinner {
     border: 4px solid #333;
     border-top: 4px solid #007bff;
+  }
+
+  /* Dark mode mobile improvements */
+  @media (max-width: 480px) {
+    .search-bar input {
+      border: 2px solid #555;
+    }
+
+    .search-bar input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+    }
+
+    .command-item {
+      border: 1px solid #444;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .error-container {
+      border: 1px solid #444;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
   }
 }
