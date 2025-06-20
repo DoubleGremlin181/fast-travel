@@ -324,6 +324,11 @@ footer a:hover {
     border-radius: 6px;
   }
 
+  /* Hide shortcut hints on mobile devices */
+  .shortcut-hint {
+    display: none;
+  }
+
   /* Commands section improvements */
   .commands-heading {
     font-size: 1.4em;
