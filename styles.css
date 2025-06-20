@@ -32,6 +32,24 @@ header {
   text-align: left;
   margin-bottom: 20px;
 }
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 /* Search Bar Styles */
 .search-bar {
   display: flex;
@@ -173,23 +191,27 @@ header {
   font-size: 1em;
   margin-bottom: 10px;
 }
-/* Stack the buttons vertically with a gap */
+/* Horizontal button layout for error actions */
 .button-container {
   display: flex;
-  flex-direction: column;
   gap: 10px;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 /* Standardized button style for error actions */
 .error-btn {
-  padding: 10px;
-  font-size: 1em;
+  padding: 10px 16px;
+  font-size: 0.9em;
   border: none;
   background-color: #4285f4;
   color: #fff;
   border-radius: 4px;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 140px;
 }
 .error-btn:hover {
   background-color: #357ae8;
@@ -199,13 +221,26 @@ footer {
   text-align: center;
   margin-top: 20px;
   font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 footer a {
   text-decoration: none;
   color: #007bff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 footer a:hover {
   text-decoration: underline;
+}
+/* GitHub Icon */
+.github-icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
 }
 /* Responsive Adjustments */
 @media (min-width: 768px) {
@@ -217,9 +252,16 @@ footer a:hover {
   }
 }
 @media (max-width: 480px) {
-  .header-title,
+  .container {
+    padding: 15px;
+  }
+  .header-title {
+    font-size: 1.5em;
+    text-align: center;
+  }
   .header-tagline {
     text-align: center;
+    font-size: 0.9em;
   }
   .search-bar {
     flex-direction: column;
@@ -229,6 +271,43 @@ footer a:hover {
     min-width: unset;
     width: 100%;
     margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  .search-bar button {
+    width: 100%;
+    border-radius: 4px;
+  }
+  .error-btn {
+    min-width: 120px;
+    font-size: 0.85em;
+    padding: 8px 12px;
+  }
+  .button-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .error-btn {
+    width: 100%;
+    flex: none;
+  }
+  .commands-heading {
+    font-size: 1.2em;
+    text-align: center;
+  }
+  .command-title {
+    padding: 8px;
+    font-size: 0.9em;
+  }
+  .command-details {
+    padding: 8px;
+    font-size: 0.85em;
+  }
+  .section-header {
+    font-size: 1.1em;
+  }
+  .spinner {
+    width: 35px;
+    height: 35px;
   }
 }
 
@@ -280,5 +359,9 @@ footer a:hover {
   }
   footer a {
     color: #66aaff;
+  }
+  .spinner {
+    border: 4px solid #333;
+    border-top: 4px solid #007bff;
   }
 }
