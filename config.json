@@ -157,7 +157,7 @@
       "type": "default",
       "routes": [
         {
-          "supportedDevices": ["Android", "iOS"],
+          "supportedDevices": "*",
           "defaultUrl": "https://maps.google.com",
           "customPatterns": [
             {
