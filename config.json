@@ -198,6 +198,23 @@
         }
       ]
     },
+    "gm": {
+      "name": "Gmail",
+      "type": "default",
+      "routes": [
+        {
+          "supportedDevices": "*",
+          "defaultUrl": "https://mail.google.com/mail/u/0/#inbox",
+          "customPatterns": [
+            {
+              "pattern": "u/{account_number}",
+              "targetUrl": "https://mail.google.com/mail/u/{account_number}/#inbox"
+            }
+          ],
+          "fallbackUrl": "https://mail.google.com/mail/u/0/#search/{args}"
+        }
+      ]
+    },
     "mailto": {
       "name": "Email",
       "type": "default",
