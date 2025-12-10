@@ -568,7 +568,7 @@
           "supportedDevices": "*",
           "defaultUrl": "https://time.is",
           "customPatterns": [],
-          "fallbackUrl": "https://time.is"
+          "fallbackUrl": "https://time.is/{args}"
         }
       ]
     },
