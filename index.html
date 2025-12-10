@@ -593,18 +593,9 @@
             }
           }
           if (!targetUrl || targetUrl === matchingRoute.defaultUrl) {
-            // Check if {args} appears in a path (not in query parameters)
-            const argsPosition = matchingRoute.fallbackUrl.indexOf('{args}');
-            const queryPosition = matchingRoute.fallbackUrl.indexOf('?');
-            const argsInPath = queryPosition === -1 || argsPosition < queryPosition;
-            
-            // For path-based args, replace whitespace with underscores
-            const processedArgs = argsInPath 
-              ? joinedArgs.replace(/\s+/g, '_') 
-              : joinedArgs;
             targetUrl = matchingRoute.fallbackUrl.replace(
               "{args}",
-              encodeURIComponent(processedArgs)
+              encodeURIComponent(joinedArgs)
             );
           }
         }
