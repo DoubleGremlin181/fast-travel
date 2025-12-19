@@ -262,6 +262,43 @@
         );
       }
 
+      // Typo ignore list management using localStorage
+      function getIgnoredTypos() {
+        try {
+          const ignored = localStorage.getItem("typoIgnoreList");
+          return ignored ? JSON.parse(ignored) : [];
+        } catch (error) {
+          loggerHelper("Error reading typo ignore list:", error);
+          return [];
+        }
+      }
+
+      function addIgnoredTypo(word) {
+        try {
+          const ignored = getIgnoredTypos();
+          const lowerWord = word.toLowerCase();
+          if (!ignored.includes(lowerWord)) {
+            ignored.push(lowerWord);
+            localStorage.setItem("typoIgnoreList", JSON.stringify(ignored));
+            loggerHelper("Added to typo ignore list:", lowerWord);
+          }
+        } catch (error) {
+          loggerHelper("Error adding to typo ignore list:", error);
+        }
+      }
+
+      function removeIgnoredTypo(word) {
+        try {
+          const ignored = getIgnoredTypos();
+          const lowerWord = word.toLowerCase();
+          const filtered = ignored.filter((w) => w !== lowerWord);
+          localStorage.setItem("typoIgnoreList", JSON.stringify(filtered));
+          loggerHelper("Removed from typo ignore list:", lowerWord);
+        } catch (error) {
+          loggerHelper("Error removing from typo ignore list:", error);
+        }
+      }
+
       function levenshtein(a, b) {
         const matrix = [];
         for (let i = 0; i <= b.length; i++) {
@@ -288,6 +325,14 @@
 
       function findClosestCommand(input) {
         if (!window.config) return null;
+
+        // Check if this word is in the ignore list
+        const ignoredTypos = getIgnoredTypos();
+        if (ignoredTypos.includes(input.toLowerCase())) {
+          loggerHelper("Debug: Command in typo ignore list:", input);
+          return null;
+        }
+
         let closest = null;
         let minDistance = Infinity;
         Object.keys(config.commands).forEach(function (cmd) {
@@ -484,6 +529,9 @@
                   <button id="googleButton" class="error-btn">
                     Search on Google <span class="shortcut-hint">(g)</span>
                   </button>
+                  <button id="ignoreButton" class="error-btn">
+                    Permanently ignore typo <span class="shortcut-hint">(i)</span>
+                  </button>
                 </div>
               </div>
               ${generateCommandList()}
@@ -513,6 +561,18 @@
                 redirectHelper(redirectUrl);
               });
 
+            document
+              .getElementById("ignoreButton")
+              .addEventListener("click", () => {
+                addIgnoredTypo(command);
+                const googleCmd = config.commands["g"];
+                const url = googleCmd.routes[0].fallbackUrl.replace(
+                  "{args}",
+                  encodeURIComponent(query)
+                );
+                redirectHelper(url);
+              });
+
             document.addEventListener("keydown", function handler(event) {
               if (event.key.toLowerCase() === "g") {
                 const googleCmd = config.commands["g"];
@@ -533,6 +593,16 @@
                   (isDebug ? "&debug=true" : "");
                 document.removeEventListener("keydown", handler);
                 redirectHelper(redirectUrl);
+              }
+              if (event.key.toLowerCase() === "i") {
+                addIgnoredTypo(command);
+                const googleCmd = config.commands["g"];
+                const url = googleCmd.routes[0].fallbackUrl.replace(
+                  "{args}",
+                  encodeURIComponent(query)
+                );
+                document.removeEventListener("keydown", handler);
+                redirectHelper(url);
               }
             });
             return;

@@ -106,8 +106,8 @@ Fast Travel uses a command-based syntax defined in the `config.json` file. Comma
     - Typing `$AAPL` opens the Yahoo Finance quote page for AAPL.
 
 - **Subcommands / Custom Patterns**
-  - **Syntax:** `<command> <subcommand>/<query>` or using a custom regex defined in the config.  
-  - **Examples:**  
+  - **Syntax:** `<command> <subcommand>/<query>` or using a custom regex defined in the config.
+  - **Examples:**
     - Typing `yt subs` opens your YouTube subscriptions.
     - Typing `gh u/DoubleGremlin181` searches for DoubleGremlin181's profile on GitHub.
 
@@ -134,6 +134,24 @@ For instance, the `apps` command provides different routing options depending on
   The file is parsed sequentially. If a query matches multiple patterns, the first match is used. Arrange your custom patterns accordingly to ensure the desired behavior.
 
 Tip: Adding `debug=true` to the URL parameters prints debug statements to the console and adds a 3s delay.
+
+## Typo Detection & Ignore List
+
+Fast Travel includes smart typo detection that suggests corrections when you mistype a command. If you encounter a false positive (a legitimate word or custom shortcut flagged as a typo), you can permanently ignore it:
+
+- **Ignoring a Typo:**
+  - When the typo suggestion appears, press **`i`** or click **"Permanently ignore typo"**
+  - The word will be added to your device's ignore list and won't trigger suggestions in the future
+  - After ignoring, Fast Travel will proceed with a Google search using your original query
+
+- **Managing the Ignore List:**
+  - The ignore list is stored locally in your browser's localStorage
+  - To view or edit ignored words:
+    1. Open your browser's Developer Tools (press **F12**)
+    2. Go to the **Application** (Chrome/Edge) or **Storage** (Firefox) tab
+    3. Navigate to **Local Storage** → your domain
+    4. Find the `typoIgnoreList` key to view, edit, or delete entries
+  - To clear the entire list, simply delete the `typoIgnoreList` key from localStorage
 
 ## Credits
 
