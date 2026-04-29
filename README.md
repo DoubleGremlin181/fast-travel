@@ -1,3 +1,7 @@
+> **Fast Travel App (v2) is now available.** If you want a browser extension + native Android app with one-click install and cross-device config sync, see [fast-travel-app](https://github.com/DoubleGremlin181/fast-travel-app).
+>
+> v1 (this repo) remains fully functional and is the right choice if you prefer a self-hosted static page that works in any browser without an extension.
+
 # Fast Travel
 
 **Supercharge your search bar**
